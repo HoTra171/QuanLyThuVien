@@ -1,0 +1,26 @@
+﻿<Window x:Class="QuanLyThuVien.src.Views.ThongTinChiTiet"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyThuVien"
+        mc:Ignorable="d"
+        Title="ThongTinChiTiet" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!--Thanh tiêu đề-->
+        <DockPanel VerticalAlignment="Top" Height="40" Background="#5D99D7" Grid.Row="0" Grid.Column="1" >
+            <TextBlock Text="BÁO CÁO THỐNG KÊ" Foreground="White" FontSize="18" FontWeight="Bold"
+            VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </DockPanel>
+        <!--thanh sidebar-->
+        <local:SideBar Grid.Row="0" Grid.RowSpan="2"/>
+    </Grid>
+</Window>

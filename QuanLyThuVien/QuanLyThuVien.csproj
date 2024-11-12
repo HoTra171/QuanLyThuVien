@@ -1,0 +1,106 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="icon\QuyDinh\**" />
+    <EmbeddedResource Remove="icon\QuyDinh\**" />
+    <None Remove="icon\QuyDinh\**" />
+    <Page Remove="icon\QuyDinh\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="icon\DocGia\capnhat.png" />
+    <None Remove="icon\DocGia\themmoi.png" />
+    <None Remove="icon\DocGia\xoa.png" />
+    <None Remove="icon\MuonSach\luulai.png" />
+    <None Remove="icon\MuonSach\no.png" />
+    <None Remove="icon\MuonSach\trano.png" />
+    <None Remove="icon\NhanVien\capnhat.png" />
+    <None Remove="icon\NhanVien\sua.png" />
+    <None Remove="icon\NhanVien\them.png" />
+    <None Remove="icon\NhanVien\xoa.png" />
+    <None Remove="icon\QuanLyThuVien\luachon.png" />
+    <None Remove="icon\QuanLyThuVien\muonsach.png" />
+    <None Remove="icon\QuanLyThuVien\thutienphat.png" />
+    <None Remove="icon\QuanLyThuVien\tieptheo.png" />
+    <None Remove="icon\QuanLyThuVien\trasach.png" />
+    <None Remove="icon\Sach\back.png" />
+    <None Remove="icon\Sach\capnhat.png" />
+    <None Remove="icon\Sach\chiase.png" />
+    <None Remove="icon\Sach\next.png" />
+    <None Remove="icon\Sach\nguoiviet.png" />
+    <None Remove="icon\Sach\nhatky.png" />
+    <None Remove="icon\Sach\themgiay.png" />
+    <None Remove="icon\Sach\themmoi.png" />
+    <None Remove="icon\Sach\xoa.png" />
+    <None Remove="icon\sidebar\baocao.png" />
+    <None Remove="icon\sidebar\dieukhien.png" />
+    <None Remove="icon\sidebar\docgia.png" />
+    <None Remove="icon\sidebar\muonsach.png" />
+    <None Remove="icon\sidebar\nhanvien.png" />
+    <None Remove="icon\sidebar\quydinh.png" />
+    <None Remove="icon\sidebar\sach.png" />
+    <None Remove="icon\sidebar\thoat.png" />
+    <None Remove="icon\sidebar\thu.png" />
+    <None Remove="Img\sach1.jpg" />
+    <None Remove="Img\sach2.jfif" />
+    <None Remove="Img\thuvien.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icon\DocGia\capnhat.png" />
+    <Resource Include="icon\DocGia\themmoi.png" />
+    <Resource Include="icon\DocGia\xoa.png" />
+    <Resource Include="icon\MuonSach\luulai.png" />
+    <Resource Include="icon\MuonSach\no.png" />
+    <Resource Include="icon\MuonSach\trano.png" />
+    <Resource Include="icon\NhanVien\capnhat.png" />
+    <Resource Include="icon\NhanVien\sua.png" />
+    <Resource Include="icon\NhanVien\them.png" />
+    <Resource Include="icon\NhanVien\xoa.png" />
+    <Resource Include="icon\QuanLyThuVien\luachon.png" />
+    <Resource Include="icon\QuanLyThuVien\muonsach.png" />
+    <Resource Include="icon\QuanLyThuVien\thutienphat.png" />
+    <Resource Include="icon\QuanLyThuVien\tieptheo.png" />
+    <Resource Include="icon\QuanLyThuVien\trasach.png" />
+    <Resource Include="icon\Sach\back.png" />
+    <Resource Include="icon\Sach\capnhat.png" />
+    <Resource Include="icon\Sach\chiase.png" />
+    <Resource Include="icon\Sach\next.png" />
+    <Resource Include="icon\Sach\nguoiviet.png" />
+    <Resource Include="icon\Sach\nhatky.png" />
+    <Resource Include="icon\Sach\themgiay.png" />
+    <Resource Include="icon\Sach\themmoi.png" />
+    <Resource Include="icon\Sach\xoa.png" />
+    <Resource Include="icon\sidebar\baocao.png" />
+    <Resource Include="icon\sidebar\dieukhien.png" />
+    <Resource Include="icon\sidebar\docgia.png" />
+    <Resource Include="icon\sidebar\muonsach.png" />
+    <Resource Include="icon\sidebar\nhanvien.png" />
+    <Resource Include="icon\sidebar\quydinh.png" />
+    <Resource Include="icon\sidebar\sach.png" />
+    <Resource Include="icon\sidebar\thoat.png" />
+    <Resource Include="Img\sach1.jpg" />
+    <Resource Include="Img\sach2.jfif" />
+    <Resource Include="Img\thuvien.jpg" />
+  </ItemGroup>
+
+</Project>
+

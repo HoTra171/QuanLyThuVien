@@ -1,0 +1,143 @@
+﻿<Window x:Class="QuanLyThuVien.MuonSach"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyThuVien"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="MuonSach" Height="600" Width="1000">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel VerticalAlignment="Top" Height="40" Background="#5D99D7" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock Text="MƯỢN SÁCH" Foreground="White" FontSize="18" FontWeight="Bold"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </DockPanel>
+
+        <!-- Navigation Menu -->
+        <local:SideBar Grid.Row="0" Grid.RowSpan="2"/>
+        
+        <!-- Nội dung chính-->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <!--Danh sách mượn sách-->
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--thanh tìm kiếm-->
+                <local:Search PlaceholderText="Nhập tên sách muốn mượn..." />
+
+                <DataGrid AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10"  
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False">
+                    <DataGrid.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
+                    </DataGrid.Effect>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mã số" Binding="{Binding Number}" Width="auto"/>
+                        <DataGridTextColumn Header="Tên sách" Binding="{Binding BookTitle}" Width="*"/>
+                        <DataGridTextColumn Header="Thể loại" Binding="{Binding Category}" Width="*"/>
+                        <DataGridTextColumn Header="Nhà XB" Binding="{Binding Publisher}" Width="*"/>
+                        <DataGridTextColumn Header="Tác giả" Binding="{Binding Author}" Width="*"/>
+                        <DataGridTextColumn Header="Ngày XB" Binding="{Binding PublishDate}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <!-- Thông tin độc giả -->
+            <Grid Margin="0,10,10,0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Thông tin độc giả" Margin="0,0,0,10" FontWeight="Bold" FontStyle="Italic" FontSize="18" Grid.Row="0"/>
+
+                <!--Nhập thông tin độc giả -->
+                <DataGrid AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="0,0,0,10"  
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False">
+                    <DataGrid.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
+                    </DataGrid.Effect>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mã số" Binding="{Binding Number}" Width="auto"/>
+                        <DataGridTextColumn Header="Tên sách" Binding="{Binding BookTitle}" Width="*"/>
+                        <DataGridTextColumn Header="Thể loại" Binding="{Binding Category}" Width="*"/>
+                        <DataGridTextColumn Header="Nhà XB" Binding="{Binding Publisher}" Width="*"/>
+                        <DataGridTextColumn Header="Tác giả" Binding="{Binding Author}" Width="*"/>
+                        <DataGridTextColumn Header="Ngày XB" Binding="{Binding PublishDate}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <!--các button-->
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border CornerRadius="2" Background="#E5001F" Width="120" Height="35" Grid.Row="0">
+                    <Button Background="Transparent" Foreground="White" BorderThickness="0">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="\icon\MuonSach\no.png" Width="24"/>
+                            <TextBlock Text="Tổng tiền nợ" Foreground="White" Margin="10,4,0,0"/>
+                        </StackPanel>
+                    </Button>
+                </Border>
+
+                <Border CornerRadius="2" Background="#32AC26" Width="100" Height="35" Grid.Row="1">
+                    <Button Background="Transparent" Foreground="White" BorderThickness="0">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="\icon\MuonSach\trano.png" Width="24" Margin="0,0,0,6"/>
+                            <TextBlock Text="Trả nợ" Foreground="White" Margin="10,6,0,0"/>
+                        </StackPanel>
+                    </Button>
+                </Border>
+
+                <Border CornerRadius="2" Background="#00BB9A" Width="100" Height="35" Grid.Row="2">
+                    <Button Background="Transparent" Foreground="White" BorderThickness="0">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="\icon\MuonSach\luulai.png" Width="24"/>
+                            <TextBlock Text="Lưu lại" Foreground="White" Margin="10,4,0,0"/>
+                        </StackPanel>
+                    </Button>
+                </Border>
+            </Grid>
+
+            <DataGrid AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10"  
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False">
+                <DataGrid.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
+                </DataGrid.Effect>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã số" Binding="{Binding Number}" Width="auto"/>
+                    <DataGridTextColumn Header="Tên sách" Binding="{Binding BookTitle}" Width="*"/>
+                    <DataGridTextColumn Header="Thể loại" Binding="{Binding Category}" Width="*"/>
+                    <DataGridTextColumn Header="Nhà XB" Binding="{Binding Publisher}" Width="*"/>
+                    <DataGridTextColumn Header="Tác giả" Binding="{Binding Author}" Width="*"/>
+                    <DataGridTextColumn Header="Ngày XB" Binding="{Binding PublishDate}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

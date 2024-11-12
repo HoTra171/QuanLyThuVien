@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="QuanLyThuVien.Search"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLyThuVien"
+             mc:Ignorable="d" 
+             x:Name="UserControl"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <!--Thanh tìm kiếm-->
+        <Grid HorizontalAlignment="Stretch" Grid.Row="0" Margin="20,10,20,10" >
+            <!-- TextBox ở bên dưới -->
+            <TextBox 
+                     x:Name="tbNhapTen" 
+                     Height="35"
+                     Padding="10,5,0,8"
+                     FontSize="16" 
+                     Foreground="Black" 
+                     Background="#6F85B6"
+                     BorderThickness="0"
+                     VerticalContentAlignment="Center"
+                     GotFocus="tbNhapTen_GotFocus" 
+                     LostFocus="tbNhapTen_LostFocus"
+                     />
+
+            <!-- Đường viền dưới màu đỏ -->
+            <Border BorderBrush="Red" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Margin="10,0,10,4"/>
+
+            <!-- TextBlock ở trên TextBox -->
+            <TextBlock 
+                       x:Name="tblNhapTen" 
+                       Text="{Binding PlaceholderText, ElementName=UserControl}" 
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Center" 
+                       Foreground="Black" 
+                       Margin="10,0,0,0"
+                       FontSize="16" 
+                       MouseDown="tblNhapTen_MouseDown"/>   
+        </Grid>
+    </Grid>
+</UserControl>

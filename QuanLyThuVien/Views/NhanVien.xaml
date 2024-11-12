@@ -1,0 +1,172 @@
+﻿<Window x:Class="QuanLyThuVien.NhanVien"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyThuVien"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="NhanVien" Height="600" Width="1000">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.4*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel VerticalAlignment="Top" Height="40" Background="#5D99D7" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock Text="NHÂN VIÊN" Foreground="White" FontSize="18" FontWeight="Bold"
+                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </DockPanel>
+
+        <!-- Navigation Menu -->
+        <local:SideBar Grid.Row="0" Grid.RowSpan="2"/>
+
+        <!-- Danh sách nhân viên -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.05*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+
+            <!--Thanh tìm kiếm-->
+            <local:Search PlaceholderText="Nhập tên nhân viên..." />
+
+            <DataGrid AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10"  
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False">
+                <DataGrid.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
+                </DataGrid.Effect>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã số" Binding="{Binding Number}" Width="auto"/>
+                    <DataGridTextColumn Header="Tên sách" Binding="{Binding BookTitle}" Width="*"/>
+                    <DataGridTextColumn Header="Thể loại" Binding="{Binding Category}" Width="*"/>
+                    <DataGridTextColumn Header="Nhà XB" Binding="{Binding Publisher}" Width="*"/>
+                    <DataGridTextColumn Header="Tác giả" Binding="{Binding Author}" Width="*"/>
+                    <DataGridTextColumn Header="Ngày XB" Binding="{Binding PublishDate}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid> 
+        </Grid>
+
+        <!-- Thông tin chi tiết nhân viên -->
+        <Grid Grid.Column="2" Grid.Row="1" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2.0*"/>
+                <RowDefinition Height="1.75*"/>
+                <RowDefinition Height="1.2*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Thông tin cơ bản" FontWeight="Bold" FontStyle="Italic" FontSize="18" Margin="20,10,20,0" Grid.Row="0"/>
+
+            <!-- Book Info Section -->
+            <Grid Margin="20,10,20,0" Grid.Column="1" Background="#E3F0FF" VerticalAlignment="Top" Grid.Row="1">
+                <Grid.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
+                </Grid.Effect>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Họ tên" Margin="10,10,0,10" Grid.Column="0" Grid.Row="0"/>
+                <TextBox VerticalContentAlignment="Center" Height="25" Grid.Column="1" Grid.Row="0" Margin="0,0,10,0" />
+
+                <TextBlock Text="Địa chỉ" Margin="10,10,0,10" Grid.Column="0" Grid.Row="1"/>
+                <TextBox VerticalContentAlignment="Center" Height="25" Grid.Column="1" Grid.Row="1" Margin="0,0,10,0"/>
+
+                <TextBlock Text="Điện thoại" Margin="10,10,0,10" Grid.Column="0" Grid.Row="2"/>
+                <TextBox VerticalContentAlignment="Center" Height="25" Grid.Column="1" Grid.Row="2" Margin="0,0,10,0"/>
+
+                <TextBlock Text="Ngày sinh" Margin="10,10,0,10" Grid.Column="0" Grid.Row="3"/>
+                <DatePicker Grid.Column="1" Grid.Row="3" VerticalContentAlignment="Center" Margin="0,5,10,5"/>
+
+                <TextBlock Text="Tên tài khoản" Margin="10,10,0,10" Grid.Column="0" Grid.Row="4"/>
+                <TextBox VerticalContentAlignment="Center" Height="25" Grid.Column="1" Grid.Row="4" Margin="0,0,10,0"/>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Quyền hạn sử dụng" FontWeight="Bold" FontStyle="Italic" FontSize="18" Margin="20,0,0,10" Grid.Row="0" Grid.Column="0"/>
+                <TextBox Text="Nhân viên" Height="25" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="20,0,20,0"/>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="20,15,0,0">
+                    <CheckBox Content="Lập thẻ độc giả" />
+                    <CheckBox Content="Tiếp nhận sách mới" Margin="0,10,0,0"/>
+                    <CheckBox Content="Tra cứu sách" Margin="0,10,0,0"/>
+                    <CheckBox Content="Cho mượn sách" Margin="0,10,0,0"/>
+                    <CheckBox Content="Nhận trả sách" Margin="0,10,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" >
+                    <CheckBox Content="Lập phiếu thu tiền phạt"  Margin="0,10,0,0"/>
+                    <CheckBox Content="Lập báo cáo"  Margin="0,10,0,0"/>
+                    <CheckBox Content="Thay đổi quy định"  Margin="0,10,0,0"/>
+                    <CheckBox Content="Phân quyền"  Margin="0,10,0,0"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Thao Tác" Grid.Row="0" Grid.Column="0" Margin="20" FontSize="18" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left"/>
+                <Button Background="#00BB9A" Width="100" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,0,10,0" Grid.Row="1" Grid.Column="0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="\icon\NhanVien\them.png" Width="24"/>
+                        <TextBlock Text="Thêm" Foreground="White" Margin="5,4,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="#89DE81" Width="100" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,0,10,0" Grid.Row="1" Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="\icon\NhanVien\sua.png" Width="24"/>
+                        <TextBlock Text="Sửa" Foreground="White" Margin="10,4,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="Red" Width="100" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,0,10,0" Grid.Row="1" Grid.Column="2">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="\icon\NhanVien\xoa.png" Width="24"/>
+                        <TextBlock Text="Xóa" Foreground="White" Margin="10,4,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Background="#48608E" Width="120" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,10,10,10" Grid.Row="0" Grid.Column="2">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="\icon\NhanVien\capnhat.png" Width="24"/>
+                        <TextBlock Text="Reset mật khẩu" Foreground="White" Margin="5,4,0,0"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
