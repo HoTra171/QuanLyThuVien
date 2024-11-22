@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:QuanLyThuVien"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
@@ -37,7 +38,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="6*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
             <!-- Báo cáo thống kê sách theo thể loại -->
@@ -46,7 +47,7 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
                 <TextBlock Text="Tháng: " VerticalAlignment="Center" Margin="30,0,0,0"/>
-                <ComboBox Width="70" Margin="5" SelectedIndex="7" Height="30" 
+                <ComboBox Width="65" Margin="5" SelectedIndex="7" Height="30" 
           VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                     <ComboBoxItem Content="1"/>
                     <ComboBoxItem Content="2"/>
@@ -63,17 +64,11 @@
                 </ComboBox>
 
                 <TextBlock Text="Năm: " VerticalAlignment="Center" Margin="30,0,0,0"/>
-                <ComboBox Width="70" Margin="5" SelectedIndex="7" Height="30" 
-          VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
-                    <ComboBoxItem Content="2020"/>
-                    <ComboBoxItem Content="2021"/>
-                    <ComboBoxItem Content="2022"/>
-                    <ComboBoxItem Content="2023"/>
-                    <ComboBoxItem Content="2024"/>
-                </ComboBox>
+                <TextBox Grid.Column="1" Grid.Row="0" Margin="10,0,10,13" Width="50" VerticalContentAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
             </StackPanel>
 
-            <Border CornerRadius="2" Background="#48608E" Width="70" Height="30" HorizontalAlignment="Right" Margin="0,0,10,0" Grid.Row="1" Grid.Column="0">
+            <Border CornerRadius="2" Background="#48608E" Width="100" Height="35" HorizontalAlignment="Right" Margin="0,0,10,0" Grid.Row="1" Grid.Column="0">
                 <Button Content="Thống kê" BorderThickness="0" Background="Transparent" FontWeight="Bold"/>
             </Border>
 
@@ -101,7 +96,7 @@
                 <DatePicker Margin="5" Height="30" SelectedDate="2020-08-26" Width="150" VerticalContentAlignment="Center"/>
             </StackPanel>
 
-            <Border CornerRadius="2" Background="#48608E" Width="70" Height="30" HorizontalAlignment="Right" Margin="0,0,10,0" Grid.Row="1" Grid.Column="1">
+            <Border CornerRadius="2" Background="#48608E" Width="100" Height="35" HorizontalAlignment="Right" Margin="0,0,10,0" Grid.Row="1" Grid.Column="1">
                 <Button Content="Thống kê" BorderThickness="0" Background="Transparent" FontWeight="Bold"/>
             </Border>
 
@@ -120,17 +115,17 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DockPanel Grid.Column="0" Grid.Row="3" VerticalAlignment="Bottom">
+            <DockPanel Grid.Column="0" Grid.Row="3" VerticalAlignment="Bottom" Margin="0 0 0 8">
                 <Label Content="Tổng số lượt mượn:" FontWeight="Bold" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="30,10,10,10" Grid.Row="2"/>
                 <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4"  Width="40" Height="20" Margin="-5,3,0,0">
                     <TextBlock/>
                 </Border>
-                <Border CornerRadius="2" Background="#48608E" Width="100" Height="30" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,10,0">
+                <Border CornerRadius="2" Background="#48608E" Width="130" Height="35" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,10,0">
                     <Button Content="Xuất báo cáo" Background="Transparent" BorderThickness="0" FontWeight="Bold"/>
                 </Border>
             </DockPanel>
 
-            <Border CornerRadius="2" Background="#48608E" Width="100" Height="30" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Margin="10">
+            <Border CornerRadius="2" Background="#48608E" Width="130" Height="35" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Margin="10">
                 <Button Content="Xuất báo cáo" Background="Transparent" BorderThickness="0" FontWeight="Bold"/>
             </Border>
         </Grid>

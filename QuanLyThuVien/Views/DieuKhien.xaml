@@ -3,10 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:QuanLyThuVien"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="TrangChu" Height="600" Width="1000">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDieuKhienCommand}" CommandParameter="{Binding ElementName=mainWindow}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -88,23 +94,23 @@
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20" Grid.Row="1" Grid.Column="2">
             
             <Button Background="#FFCAAA2E" BorderThickness="0" Width="150" Height="50" Margin="0,0,0,0" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Left">
-                <StackPanel Orientation="Horizontal" Margin="15,0,0,0">
+                <StackPanel Orientation="Horizontal">
                     <Image Source="\icon\QuanLyThuVien\muonsach.png" Width="24"/>
-                    <TextBlock Text="Mượn sách" Foreground="White" Margin="10,4,0,0"/>
+                    <TextBlock Text="Mượn sách" Foreground="White" Margin="10,2,0,0"/>
                 </StackPanel>
             </Button>
 
             <Button Background="#FF4CAF50" BorderThickness="0" Width="150" Height="50" Margin="0,50,0,0" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Left">
-                <StackPanel Orientation="Horizontal" Margin="15,0,0,0">
+                <StackPanel Orientation="Horizontal" >
                     <Image Source="\icon\QuanLyThuVien\trasach.png" Width="24"/>
-                    <TextBlock Text="Trả sách" Foreground="White" Margin="10,4,0,0"/>
+                    <TextBlock Text="Trả sách" Foreground="White" Margin="10,2,0,0"/>
                 </StackPanel>
             </Button>
 
             <Button Background="#FFB71C1C" BorderThickness="0" Width="150" Height="50" Margin="0,50,0,0" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Left">
-                <StackPanel Orientation="Horizontal" Margin="15,0,0,0">
+                <StackPanel Orientation="Horizontal">
                     <Image Source="\icon\QuanLyThuVien\thutienphat.png" Width="24"/>
-                    <TextBlock Text="Thu tiền phạt" Foreground="White" Margin="10,4,0,0"/>
+                    <TextBlock Text="Thu tiền phạt" Foreground="White" Margin="5,2,0,0"/>
                 </StackPanel>
             </Button>
         </StackPanel>

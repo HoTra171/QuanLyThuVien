@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:QuanLyThuVien"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        
+        DataContext="{StaticResource BookVM}"
+        
         Title="Sach" Height="600" Width="1000">
     <Grid Background="#F0F0F0">
 
@@ -45,31 +49,36 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="Thông tin sách" FontSize="18" FontWeight="Bold" Margin="0,20" Grid.Row="0"/>
                 <Image Source="\Img\sach2.jfif" VerticalAlignment="Top" Margin="0,0,0,70" Stretch="Fill" Grid.Row="1"/>
-                <Button Background="#89DE81" BorderThickness="0" Width="100" FontWeight="Bold" Height="35" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="2" Click="UpdateButton_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="\icon\Sach\capnhat.png" Width="24" Margin="5,0,0,0"/>
-                        <TextBlock Text="Cập nhật" Margin="5,5,10,5"/>
+                <Button Background="#89DE81" BorderThickness="0" Width="125" FontWeight="Bold" Height="35"
+                        VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="2" 
+                        Command="{Binding UpdateBookCommand}">
+
+                    <StackPanel Orientation="Horizontal"  Margin="-10,0,0,0">
+                        <Image Source="\icon\Sach\capnhat.png" Width="24"/>
+                        <TextBlock Text="Cập nhật" Margin="10,4,10,5"/>
                     </StackPanel>
                 </Button>
 
-                <Button Background="#00BB9A" BorderThickness="0" Width="100" FontWeight="Bold" Height="35" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Click="AddButton_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="\icon\Sach\themmoi.png" Width="24" Margin="5,0,0,0"/>
-                        <TextBlock Text="Thêm mới" Margin="5,5,10,5"/>
+                <Button Background="#00BB9A" BorderThickness="0" Width="125" FontWeight="Bold" Height="35"
+                        VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3"
+                        Command="{Binding AddBookCommand}">
+                    <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
+                        <Image Source="\icon\Sach\themmoi.png" Width="24"/>
+                        <TextBlock Text="Thêm mới" Margin="10,4,10,5"/>
                     </StackPanel>
                 </Button>
             </Grid>
 
-            
+
             <!-- Book Info Section -->
             <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.6*"/>
-                    <RowDefinition Height="3.5*"/>
+                    <RowDefinition Height="0.4*"/>
+                    <RowDefinition Height="3.68*"/>
                     <RowDefinition Height="0.95*"/>
                     <RowDefinition Height="0.95*"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Column="1" Background="#E3F0FF" VerticalAlignment="Top" Grid.Row="1" Margin="10,0">
+                <Grid Grid.Column="1" Background="#E3F0FF" VerticalAlignment="Top" Grid.Row="1" Margin="10,0,0,0">
                     <Grid.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
                     </Grid.Effect>
@@ -88,32 +97,34 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Tên sách" Margin="10,15,0,10" Grid.Column="0" Grid.Row="0"/>
-                    <TextBox x:Name="tbBookName" VerticalContentAlignment="Center" Height="25" Grid.Column="1" Grid.Row="0" Margin="0,5,10,0"/>
+                    <TextBlock Text="Tên sách" Margin="10,25,0,0" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox x:Name="tbBookName" Text="{Binding BookName}" Grid.Column="1" Grid.Row="0" Margin="10,5,10,0" Padding="0,15,0,0" materialDesign:HintAssist.Hint="Tên Sách" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
-                    <TextBlock Text="Thể loại" Margin="10,15,0,10" Grid.Column="0" Grid.Row="1"/>
-                    <TextBox x:Name="tbCategory" VerticalContentAlignment="Center" Height="25" Grid.Column="1" Grid.Row="1" Margin="0,5,10,0"/>
+                    <TextBlock Text="Thể loại" Margin="10,25,0,0" Grid.Column="0" Grid.Row="1"/>
+                    <TextBox x:Name="tbCategory" Text="{Binding Category}" Grid.Column="1" Grid.Row="1" Margin="10,5,10,0" Padding="0,15,0,0" materialDesign:HintAssist.Hint="Thể Loại" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
-                    <TextBlock Text="Tác giả" Margin="10,15,0,10" Grid.Column="0" Grid.Row="2"/>
-                    <TextBox x:Name="tbAuthor" VerticalContentAlignment="Center" Height="25" Grid.Column="1" Grid.Row="2" Margin="0,5,10,0"/>
+                    <TextBlock Text="Tác giả" Margin="10,25,0,0" Grid.Column="0" Grid.Row="2"/>
+                    <TextBox x:Name="tbAuthor" Text="{Binding Author}" Grid.Column="1" Grid.Row="2" Margin="10,0,10,0" Padding="0,20,0,0" materialDesign:HintAssist.Hint="Tác Giả" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
-                    <TextBlock Text="Nhà xuất bản" Margin="10,15,0,10" Grid.Column="0" Grid.Row="3"/>
-                    <TextBox x:Name="tbPublisher" VerticalContentAlignment="Center" Height="25" Grid.Column="1" Grid.Row="3" Margin="0,5,10,0"/>
+                    <TextBlock Text="Nhà xuất bản" Margin="10,25,0,0" Grid.Column="0" Grid.Row="3"/>
+                    <TextBox x:Name="tbPublisher" Text="{Binding Publisher}" Grid.Column="1" Grid.Row="3" Margin="10,5,10,0" Padding="0,15,0,0" materialDesign:HintAssist.Hint="Nhà Xuất Bản" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
-                    <TextBlock Text="Ngày xuất bản" Margin="10,15,10,10" Grid.Column="0" Grid.Row="4"/>
-                    <DatePicker x:Name="tbDatePublish" Grid.Column="1" Grid.Row="4" VerticalContentAlignment="Center" Margin="0,5,10,0"/>
+                    <TextBlock Text="Ngày xuất bản" Margin="10,25,0,0" Grid.Column="0" Grid.Row="4"/>
+                    <DatePicker x:Name="tbDatePublish" SelectedDate="{Binding DatePublish}" Grid.Column="1" Grid.Row="4" Margin="10,5,10,0" Padding="0,15,0,0" materialDesign:HintAssist.Hint="Ngày Xuất Bản" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
-                    <TextBlock Text="Ngày nhập" Margin="10,15,0,10" Grid.Column="0" Grid.Row="5"/>
-                    <DatePicker x:Name="tbDateImport" Grid.Column="1" Grid.Row="5" VerticalContentAlignment="Center" Margin="0,5,10,0"/>
+                    <TextBlock Text="Ngày nhập" Margin="10,25,0,0" Grid.Column="0" Grid.Row="5"/>
+                    <DatePicker x:Name="tbDateImport" SelectedDate="{Binding DateImport}" Grid.Column="1" Grid.Row="5" Margin="10,5,10,0" Padding="0,15,0,0" materialDesign:HintAssist.Hint="Ngày Nhập" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
-                    <TextBlock Text="Trị giá" Margin="10,15,0,10" Grid.Column="0" Grid.Row="6"/>
-                    <TextBox x:Name="tbPrice" VerticalContentAlignment="Center" Height="25" Grid.Column="1" Grid.Row="6" Margin="0,5,10,0"/>
+                    <TextBlock Text="Trị giá" Margin="10,20,0,0" Grid.Column="0" Grid.Row="6"/>
+                    <TextBox x:Name="tbPrice" Text="{Binding Price}" Grid.Column="1" Grid.Row="6" Margin="10,12,10,15" Padding="0,5,0,0" materialDesign:HintAssist.Hint="Trị Giá" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </Grid>
 
-                <Button Background="#F44236" BorderThickness="0" Width="100" FontWeight="Bold" Grid.Column="1" Height="35" VerticalAlignment="Top" Grid.Row="2" Click="DeleteButton_Click">
+
+                <Button Background="#F44236" BorderThickness="0" Width="125" FontWeight="Bold" Grid.Column="1" Height="35" VerticalAlignment="Top" Grid.Row="2" 
+                        Command="{Binding DeleteBookCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="\icon\Sach\Xoa.png" Width="24" Margin="5,0,0,0"/>
-                        <TextBlock Text="Xóa" Margin="5,5,10,5"/>
+                        <TextBlock Text="Xóa" Margin="10,4,10,5"/>
                     </StackPanel>
                 </Button>
 
@@ -157,7 +168,7 @@
             <!-- Book List Section -->
             <Grid Grid.Row="1" Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1.23*"/>
+                    <RowDefinition Height="1.2*"/>
                     <RowDefinition Height="10*"/>
                     <RowDefinition Height="0.8*"/>
                 </Grid.RowDefinitions>
@@ -165,19 +176,23 @@
                 <!--Thanh tìm kiếm-->
                 <local:Search PlaceholderText="Nhập tên sách..." />
 
-                <DataGrid x:Name="dataGrid" ItemsSource="{Binding Books}" AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10" SelectionChanged="dataGrid_SelectionChanged"  
-                          MouseLeftButtonDown="DataGrid_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False" >
+                <DataGrid x:Name="dataGrid" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                          AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10"  IsReadOnly ="true"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False" >
                     <DataGrid.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
                     </DataGrid.Effect>
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Chọn">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Chọn">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+
+                        <DataGridTextColumn Header="Được chọn" Binding="{Binding IsSelected}" Width="auto"/>
+
                         <DataGridTextColumn Header="Mã số" Binding="{Binding Id}" Width="auto"/>
                         <DataGridTextColumn Header="Tên sách" Binding="{Binding BookName}" Width="auto"/>
                         <DataGridTextColumn Header="Thể loại" Binding="{Binding Category}" Width="auto"/>
@@ -186,7 +201,7 @@
                         <DataGridTextColumn Header="Ngày XB" Binding="{Binding DatePublish}" Width="auto"/>
                         <DataGridTextColumn Header="Ngày Nhập" Binding="{Binding DateImport}" Width="auto"/>
                         <DataGridTextColumn Header="Giá trị" Binding="{Binding Price}" Width="auto"/>
-                </DataGrid.Columns>
+                    </DataGrid.Columns>
                 </DataGrid>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="2" Grid.Row="3">

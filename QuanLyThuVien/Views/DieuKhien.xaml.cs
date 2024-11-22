@@ -25,12 +25,5 @@ namespace QuanLyThuVien
         {
             InitializeComponent();
         }
-        private void BtnQuyDinh_Click(object sender, RoutedEventArgs e)
-        {
-            //QuyDinh qd = new QuyDinh();
-            //qd.Show();
-            //this.Close();
-        }
-
     }
 }

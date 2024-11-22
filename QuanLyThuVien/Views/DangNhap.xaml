@@ -3,13 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:QuanLyThuVien"
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         WindowStartupLocation="CenterScreen"
+        
+        DataContext="{StaticResource DangNhapVM}"
         Title="Màn hình đăng nhập" 
         Height="350" Width="525"
-        Background="White">
+        Background="White" >
     <Window.Resources>
         <Style x:Key="QLTVFontStyle" TargetType="Control" >
             <Setter Property="FontFamily" Value="Times New Roman"/>
@@ -27,16 +31,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.15*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
             <!-- Tiêu đề -->
             <Label Content="QUẢN LÝ THƯ VIỆN" 
                Grid.ColumnSpan="4" 
@@ -46,67 +42,61 @@
                Margin="0,30,0,30"
                />
 
-            <!-- Label Tài khoản -->
-            <Label Content="Tài Khoản" 
-               Grid.Row="1" 
-               Grid.Column="0" 
-               HorizontalAlignment="Right" 
-               VerticalAlignment="Center"
-               FontWeight="Bold"
-               Style="{DynamicResource QLTVFontStyle}" 
-               />
-
-            <!-- TextBox Tài khoản -->
-            <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" 
-                CornerRadius="15" 
-                Background="White" 
-                BorderBrush="Black" 
-                BorderThickness="1" 
-                Padding="5" 
-                Margin="15,0,0,0"
-                >
-                <TextBox x:Name="txtUser" 
-                         Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
-                         Background="Transparent" 
-                         BorderThickness="0" 
-                         VerticalContentAlignment="Center" 
-                         Style="{DynamicResource QLTVFontStyle}" />
-
-            </Border>
-
-            <!-- Label Mật khẩu -->
-            <Label Content="Mật Khẩu" 
-               Grid.Row="2" 
-               Grid.Column="0" 
-               HorizontalAlignment="Right" 
-               VerticalAlignment="Center"
-               Margin="0,30,0,0" 
-               FontWeight="Bold"
-               Style="{DynamicResource QLTVFontStyle}" 
-               />
-
-            <!-- PasswordBox Mật khẩu -->
-            <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-                CornerRadius="15" 
-                Background="White" 
-                BorderBrush="Black" 
-                BorderThickness="1" 
-                Padding="5" 
-                Margin="15,30,0,0"
-                >
-                <PasswordBox x:Name="txtPass" 
-                             PasswordChanged="txtPassword_PasswordChanged" 
-                             Background="Transparent" 
-                             BorderThickness="0" 
-                             VerticalContentAlignment="Center" 
-                             Style="{DynamicResource QLTVFontStyle}" />
-            </Border>
-
-            <!-- Nút Đăng Nhập -->
-            <Border CornerRadius="2" Background="DodgerBlue" Width="150" Margin="0,40,0,0" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
-                <Button x:Name="btnLogin" Content="Đăng Nhập" Height="30" Foreground="White" Command="{Binding LoginCommand}" 
-                        Background="Transparent" FontWeight="Bold" BorderThickness="0" Click="btnLogin_Click"/>    
-            </Border>
+            <Grid Grid.Row="1">
+                <materialDesign:Card
+					Width="300"
+					Height="150"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Center">
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="Grid">
+                                <Setter Property="Margin" Value="10,0,10,0" />
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <TextBox
+                                Padding="0,25,0,0"
+                                FontSize="15"
+								materialDesign:HintAssist.Hint="Username"
+								Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+								Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <PasswordBox
+								x:Name="FloatingPasswordBox"
+                                Padding="0,25,0,0"
+                                FontSize="15"
+								materialDesign:HintAssist.Hint="Password"
+								Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PasswordChanged">
+                                        <i:InvokeCommandAction Command="{Binding PasswordChangedCommand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" CommandParameter="{Binding ElementName=FloatingPasswordBox}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </PasswordBox>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid>
+                                <Button
+									Name="btnLogin"
+									Width="110"
+									Command="{Binding LoadDangNhapCommand}"
+									CommandParameter="{Binding ElementName=btnLogin}"
+									Content="Đăng Nhập"
+                                    IsDefault="true"
+									Style="{StaticResource MaterialDesignRaisedButton}"
+									ToolTip="Login" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

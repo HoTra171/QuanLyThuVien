@@ -96,29 +96,29 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Border CornerRadius="2" Background="#E5001F" Width="120" Height="35" Grid.Row="0">
+                <Border CornerRadius="2" Background="#E5001F" Width="140" Height="35" Grid.Row="0">
                     <Button Background="Transparent" Foreground="White" BorderThickness="0">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
                             <Image Source="\icon\MuonSach\no.png" Width="24"/>
-                            <TextBlock Text="Tổng tiền nợ" Foreground="White" Margin="10,4,0,0"/>
+                            <TextBlock Text="Tổng tiền nợ" Foreground="White" Margin="10,2,0,0"/>
                         </StackPanel>
                     </Button>
                 </Border>
 
-                <Border CornerRadius="2" Background="#32AC26" Width="100" Height="35" Grid.Row="1">
+                <Border CornerRadius="2" Background="#32AC26" Width="140" Height="35" Grid.Row="1">
                     <Button Background="Transparent" Foreground="White" BorderThickness="0">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
                             <Image Source="\icon\MuonSach\trano.png" Width="24" Margin="0,0,0,6"/>
-                            <TextBlock Text="Trả nợ" Foreground="White" Margin="10,6,0,0"/>
+                            <TextBlock Text="Trả nợ" Foreground="White" Margin="10,2,0,0"/>
                         </StackPanel>
                     </Button>
                 </Border>
 
-                <Border CornerRadius="2" Background="#00BB9A" Width="100" Height="35" Grid.Row="2">
+                <Border CornerRadius="2" Background="#00BB9A" Width="140" Height="35" Grid.Row="2">
                     <Button Background="Transparent" Foreground="White" BorderThickness="0">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
                             <Image Source="\icon\MuonSach\luulai.png" Width="24"/>
-                            <TextBlock Text="Lưu lại" Foreground="White" Margin="10,4,0,0"/>
+                            <TextBlock Text="Lưu lại" Foreground="White" Margin="10,3,0,0"/>
                         </StackPanel>
                     </Button>
                 </Border>

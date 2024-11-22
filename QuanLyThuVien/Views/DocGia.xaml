@@ -132,26 +132,26 @@
                     <TextBlock Text="Số nợ" Margin="0,10,0,10" VerticalAlignment="Center" Grid.Row="0"/>
                     <TextBox Text="0" Width="150" Height="30" Grid.Row="0" VerticalContentAlignment="Center" HorizontalAlignment="Right" Padding="10,0,0,0" Margin="0,0,20,0"/>
 
-                    <Button Background="#89DE81" BorderThickness="0" Width="100" Height="35" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="0" Grid.Column="1">
+                    <Button Background="#89DE81" BorderThickness="0" Width="130" Height="35" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="0" Grid.Column="1">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="\icon\Sach\capnhat.png" Width="24" Margin="05,0,0,0"/>
-                            <TextBlock Text="Cập nhật" Margin="5,5,10,5"/>
+                            <TextBlock Text="Cập nhật" Margin="5,4,10,5"/>
                         </StackPanel>
                     </Button>
 
                     <TextBlock Text="Loại độc giả" Margin="0,10,0,10" VerticalAlignment="Center" Grid.Row="1"/>
                     <TextBox Text="Học Sinh" Width="150" Height="30" Grid.Row="1" VerticalContentAlignment="Center" HorizontalAlignment="Right" Padding="10,0,0,0" Margin="0,0,20,0"/>
                     
-                    <Button Background="#F44236" BorderThickness="0" Width="100" Height="35" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="1" Grid.Column="1">
+                    <Button Background="#F44236" BorderThickness="0" Width="130" Height="35" VerticalAlignment="Center" FontWeight="Bold" Grid.Row="1" Grid.Column="1">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="\icon\Sach\Xoa.png" Width="24"/>
                             <TextBlock Text="Xóa thẻ" Margin="10,5,10,5"/>
                         </StackPanel>
                     </Button>
 
-                    <Button Background="#00BB9A" BorderThickness="0" VerticalAlignment="Center" Width="100" Height="35" FontWeight="Bold" Grid.Row="2" Grid.Column="1">
+                    <Button Background="#00BB9A" BorderThickness="0" VerticalAlignment="Center" Width="130" Height="35" FontWeight="Bold" Grid.Row="2" Grid.Column="1">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="\icon\Sach\themmoi.png" Width="24" Margin="5,0,0,0"/>
+                            <Image Source="\icon\Sach\themmoi.png" Width="24"/>
                             <TextBlock Text="Thêm mới" Margin="5,5,10,5"/>
                         </StackPanel>
                     </Button>
