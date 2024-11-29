@@ -41,8 +41,8 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <!-- Báo cáo thống kê sách theo thể loại -->
-            <TextBlock Text="BÁO CÁO THỐNG KÊ MƯỢN SÁCH THEO THỂ LOẠI" TextAlignment="Center" Background="#203C6A" Height="40"
+            <!-- Báo cáo thống kê sách theo tháng-->
+            <TextBlock Text="BÁO CÁO THỐNG KÊ MƯỢN SÁCH THÁNG" TextAlignment="Center" Background="#203C6A" Height="40"
                            Foreground="White" FontWeight="Bold" FontSize="16" Margin="20,0" Padding="0,10" Grid.Column="0" Grid.Row="0"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
@@ -64,7 +64,7 @@
                 </ComboBox>
 
                 <TextBlock Text="Năm: " VerticalAlignment="Center" Margin="30,0,0,0"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Margin="10,0,10,13" Width="50" VerticalContentAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox Grid.Column="1" Grid.Row="0" Margin="10,0,10,13" Padding="0,20,0,0" Width="50" VerticalContentAlignment="Center" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
             </StackPanel>
 
@@ -88,7 +88,7 @@
 
 
             <!-- Báo cáo thống kê sách theo sách trả trễ -->
-            <TextBlock Text="BÁO CÁO THỐNG KÊ MƯỢN SÁCH THEO THỂ LOẠI" TextAlignment="Center" Background="#203C6A" Height="40"
+            <TextBlock Text="BÁO CÁO THỐNG KÊ MƯỢN SÁCH THEO NGÀY" TextAlignment="Center" Background="#203C6A" Height="40"
                Foreground="White" FontWeight="Bold" FontSize="16" Margin="20,0" Padding="0,10" Grid.Column="1" Grid.Row="0"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">

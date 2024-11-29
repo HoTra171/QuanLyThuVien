@@ -3,4 +3,5 @@
                     xmlns:viewmodel="clr-namespace:QuanLyThuVien.ViewModels">
     <viewmodel:DangNhapViewModel x:Key="DangNhapVM" />
     <viewmodel:BookViewModel x:Key="BookVM" />
+    <viewmodel:NhanVienViewModal x:Key="NhanVienVM" />
 </ResourceDictionary>

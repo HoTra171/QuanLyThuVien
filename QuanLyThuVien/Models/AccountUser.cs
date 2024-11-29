@@ -36,6 +36,10 @@ namespace QuanLyThuVien.Models
         [Required]
         public DateTime Dob { get; set; }
 
+        [Column("ROLE")]
+        [Required]
+        public bool Role { get; set; }
+
         [Column("PHONE_NUMBER")]
         [Required]
         [MaxLength(255)]

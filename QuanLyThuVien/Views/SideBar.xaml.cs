@@ -1,4 +1,6 @@
-﻿using System;
+﻿using QuanLyThuVien.Models;
+using QuanLyThuVien.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -109,13 +111,21 @@ namespace QuanLyThuVien
 
         private void BtnBaoCao_Click(object sender, RoutedEventArgs e)
         {
-            BaoCao baocao = new BaoCao();
-            baocao.Show();
-            Window hi = BaoCao.GetWindow(this);
-            if (hi != null)
+            if (DangNhapViewModel.Role == true)
             {
-                // Đóng cửa sổ cha
-                hi.Close();
+                BaoCao baocao = new BaoCao();
+                baocao.Show();
+                Window hi = BaoCao.GetWindow(this);
+                if (hi != null)
+                {
+                    // Đóng cửa sổ cha
+                    hi.Close();
+                }
+            }
+            else
+            {
+                // Hiển thị thông báo không đủ quyền truy cập
+                MessageBox.Show("Bạn không có quyền truy cập vào chức năng này", "Thông báo lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -134,14 +144,22 @@ namespace QuanLyThuVien
 
         private void BtnNhanVien_Click(object sender, RoutedEventArgs e)
         {
-            NhanVien nhanvien = new NhanVien();
-            nhanvien.Show();
-
-            Window hi = NhanVien.GetWindow(this);
-            if (hi != null)
+            if (DangNhapViewModel.Role == true)
             {
-                // Đóng cửa sổ cha
-                hi.Close();
+                NhanVien nhanvien = new NhanVien();
+                nhanvien.Show();
+
+                Window hi = NhanVien.GetWindow(this);
+                if (hi != null)
+                {
+                    // Đóng cửa sổ cha
+                    hi.Close();
+                }
+            }
+            else
+            {
+                // Hiển thị thông báo không đủ quyền truy cập
+                MessageBox.Show("Bạn không có quyền truy cập vào chức năng này", "Thông báo lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

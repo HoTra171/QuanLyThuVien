@@ -170,7 +170,6 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1.2*"/>
                     <RowDefinition Height="10*"/>
-                    <RowDefinition Height="0.8*"/>
                 </Grid.RowDefinitions>
 
                 <!--Thanh tìm kiếm-->
@@ -191,8 +190,6 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTextColumn Header="Được chọn" Binding="{Binding IsSelected}" Width="auto"/>
-
                         <DataGridTextColumn Header="Mã số" Binding="{Binding Id}" Width="auto"/>
                         <DataGridTextColumn Header="Tên sách" Binding="{Binding BookName}" Width="auto"/>
                         <DataGridTextColumn Header="Thể loại" Binding="{Binding Category}" Width="auto"/>
@@ -202,19 +199,7 @@
                         <DataGridTextColumn Header="Ngày Nhập" Binding="{Binding DateImport}" Width="auto"/>
                         <DataGridTextColumn Header="Giá trị" Binding="{Binding Price}" Width="auto"/>
                     </DataGrid.Columns>
-                </DataGrid>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="2" Grid.Row="3">
-                    <Button Background="Transparent" BorderThickness="0" Margin="5,0,5,10" Height="24">
-                        <Image Source="\icon\Sach\back.png" Width="24" />
-                    </Button>
-
-                    <TextBlock Text="1/2" Foreground="Black" Margin="0,6,0,0"/>
-
-                    <Button Background="Transparent" BorderThickness="0" Margin="5,0,5,10" Height="28">
-                        <Image Source="\icon\Sach\next.png" Width="28" />
-                    </Button>
-                </StackPanel>
+                </DataGrid> 
             </Grid>
         </Grid>
     </Grid>

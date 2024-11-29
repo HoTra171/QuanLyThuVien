@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +11,8 @@ namespace QuanLyThuVien.ViewModels
 {
     public class DangNhapViewModel : BaseViewModel
     {
+        public static bool Role { get; set; }
+
         public ICommand LoadDangNhapCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
         private string _UserName;
@@ -48,8 +51,11 @@ namespace QuanLyThuVien.ViewModels
                     string passEncode = Password;
 
                     // Kiểm tra tài khoản trong cơ sở dữ liệu
-                    int count = DataProvider.Ins.DB.AccountUsers.Where(x => x.UserNameText == UserName && x.PasswordText == passEncode).Count();
-                    if (count > 0)
+                    var user = DataProvider.Ins.DB.AccountUsers
+                                .FirstOrDefault(x => x.UserNameText == UserName && x.PasswordText == passEncode);
+
+                    Role = user.Role;
+                    if (user != null)
                     {
                         loginWindow.Hide(); // Ẩn cửa sổ đăng nhập
                         mainWindow.ShowDialog(); // Hiển thị cửa sổ chính

@@ -6,6 +6,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:QuanLyThuVien"
         mc:Ignorable="d"
+        
+        DataContext="{StaticResource NhanVienVM}"
         WindowStartupLocation="CenterScreen"
         Title="NhanVien" Height="600" Width="1000">
     <Grid>
@@ -38,18 +40,19 @@
             <!--Thanh tìm kiếm-->
             <local:Search PlaceholderText="Nhập tên nhân viên..." />
 
-            <DataGrid AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10"  
+            <DataGrid ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                      AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10"  IsReadOnly ="true"   
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False">
                 <DataGrid.Effect>
                     <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
                 </DataGrid.Effect>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Mã số" Binding="{Binding Number}" Width="auto"/>
-                    <DataGridTextColumn Header="Tên sách" Binding="{Binding BookTitle}" Width="*"/>
-                    <DataGridTextColumn Header="Thể loại" Binding="{Binding Category}" Width="*"/>
-                    <DataGridTextColumn Header="Nhà XB" Binding="{Binding Publisher}" Width="*"/>
-                    <DataGridTextColumn Header="Tác giả" Binding="{Binding Author}" Width="*"/>
-                    <DataGridTextColumn Header="Ngày XB" Binding="{Binding PublishDate}" Width="*"/>
+                    <DataGridTextColumn Header="Mã Số" Binding="{Binding EmployeeId}" Width="auto"/>
+                    <DataGridTextColumn Header="Họ Tên" Binding="{Binding FullName}"  Width="auto"/>
+                    <DataGridTextColumn Header="Địa Chỉ" Binding="{Binding Address}" Width="auto"/>
+                    <DataGridTextColumn Header="Điện Thoại" Binding="{Binding PhoneNumber}" Width="auto"/>
+                    <DataGridTextColumn Header="Ngày Sinh" Binding="{Binding Dob}" Width="auto"/>
+                    <DataGridTextColumn Header="Tên Tài Khoản" Binding="{Binding UserAccount}" Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid> 
         </Grid>
@@ -83,22 +86,22 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Họ tên" Margin="10,15,0,10" Grid.Column="0" Grid.Row="0"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Họ Và Tên" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox Grid.Column="1" Grid.Row="0" Margin="0,0,10,10" Padding="0,10,0,0" Text="{Binding FullName}" materialDesign:HintAssist.Hint="Họ Và Tên" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
 
                 <TextBlock Text="Địa chỉ" Margin="10,10,0,10" Grid.Column="0" Grid.Row="1"/>
-                <TextBox Grid.Column="1" Grid.Row="1" Margin="0,-4,10,10" materialDesign:HintAssist.Hint="Số Điện Thoại" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox Grid.Column="1" Grid.Row="1" Margin="0,-4,10,10" Padding="0,8,0,0" Text="{Binding Address}" materialDesign:HintAssist.Hint="Địa Chỉ" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
 
                 <TextBlock Text="Điện thoại" Margin="10,10,0,10" Grid.Column="0" Grid.Row="2"/>
-                <TextBox Grid.Column="1" Grid.Row="2" Margin="0,-4,10,10" materialDesign:HintAssist.Hint="Số Điện Thoại" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox Grid.Column="1" Grid.Row="2" Margin="0,-4,10,10" Padding="0,8,0,0" Text="{Binding PhoneNumber}" materialDesign:HintAssist.Hint="Số Điện Thoại" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 
 
                 <TextBlock Text="Ngày sinh" Margin="10,10,0,10" Grid.Column="0" Grid.Row="3"/>
-                <DatePicker Grid.Column="1" Grid.Row="3" Margin="0,-4,10,10" materialDesign:HintAssist.Hint="Ngày Sinh" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                <DatePicker Grid.Column="1" Grid.Row="3" Margin="0,-4,10,10" Padding="0,10,0,0" SelectedDate="{Binding Dob}" materialDesign:HintAssist.Hint="Ngày Sinh" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
                 <TextBlock Text="Tên tài khoản" Margin="10,10,0,10" Grid.Column="0" Grid.Row="4"/>
-                <TextBox Grid.Column="1" Grid.Row="4" Margin="0,-4,10,10" materialDesign:HintAssist.Hint="Tên Tài Khoản" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox Grid.Column="1" Grid.Row="4" Margin="0,-4,10,10" Padding="0,8,0,0" Text="{Binding UserAccount}" materialDesign:HintAssist.Hint="Tên Tài Khoản" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             </Grid>
 
             <Grid Grid.Row="2">
@@ -113,7 +116,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <TextBlock Text="Quyền hạn sử dụng" FontWeight="Bold" FontStyle="Italic" FontSize="18" Margin="20,10,0,0" Grid.Row="0" Grid.Column="0"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="20,5,20,0" materialDesign:HintAssist.Hint="Quyển Hạn" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox Text="Nhân Viên" Grid.Row="0" Grid.Column="1" Margin="20,5,20,0" Padding="0,8,0,0" materialDesign:HintAssist.Hint="Quyển Hạn" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
                 <StackPanel Grid.Row="1" Grid.Column="0" Margin="20,15,0,0">
                     <CheckBox Content="Lập thẻ độc giả" />
@@ -142,32 +145,28 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Thao Tác" Grid.Row="0" Grid.Column="0" Margin="20" FontSize="18" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left"/>
-                <Button Background="#00BB9A" Width="100" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,0,10,0" Grid.Row="1" Grid.Column="0">
+                <TextBlock Text="Thao Tác" Grid.Row="0" Grid.Column="0" Margin="20,0,0,20" FontSize="18" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left"/>
+                <Button Background="#00BB9A" Width="100" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,0,10,0" Grid.Row="1" Grid.Column="0" 
+                        Command="{Binding AddEmployeeCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="\icon\NhanVien\them.png" Width="24"/>
                         <TextBlock Text="Thêm" Foreground="White" Margin="5,2,0,0"/>
                     </StackPanel>
                 </Button>
 
-                <Button Background="#89DE81" Width="100" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,0,10,0" Grid.Row="1" Grid.Column="1">
+                <Button Background="#89DE81" Width="100" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,0,10,0" Grid.Row="1" Grid.Column="1"
+                        Command="{Binding UpdateEmployeeCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="\icon\NhanVien\sua.png" Width="24"/>
                         <TextBlock Text="Sửa" Foreground="White" Margin="10,2,0,0"/>
                     </StackPanel>
                 </Button>
 
-                <Button Background="Red" Width="100" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,0,10,0" Grid.Row="1" Grid.Column="2">
+                <Button Background="Red" Width="100" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,0,10,0" Grid.Row="1" Grid.Column="2"
+                        Command="{Binding DeleteEmployeeCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="\icon\NhanVien\xoa.png" Width="24"/>
                         <TextBlock Text="Xóa" Foreground="White" Margin="10,2,0,0"/>
-                    </StackPanel>
-                </Button>
-
-                <Button Background="#48608E" Width="170" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,10,10,10" Grid.Row="0" Grid.Column="2">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="\icon\NhanVien\capnhat.png" Width="24"/>
-                        <TextBlock Text="Reset mật khẩu" Foreground="White" Margin="5,2,0,0"/>
                     </StackPanel>
                 </Button>
             </Grid>

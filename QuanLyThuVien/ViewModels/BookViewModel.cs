@@ -16,6 +16,7 @@ namespace QuanLyThuVien.ViewModels
 {
     public class BookViewModel : BaseViewModel
     {
+
         public ObservableCollection<Book> _Books;
         public ObservableCollection<Book> Books
         {
@@ -26,6 +27,8 @@ namespace QuanLyThuVien.ViewModels
                 OnPropertyChanged();
             }
         }
+        private ObservableCollection<Book> _allBooks;
+        public ObservableCollection<Book> FilteredBooks { get; set; } = new ObservableCollection<Book>();
 
         private Book _SelectedItem;
         public Book SelectedItem
@@ -129,16 +132,32 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged();
+                FilterBooks();
+            }
+        }
+
         // Các lệnh cho chức năng Thêm, Cập nhật, Xóa và Tải sách
         public ICommand AddBookCommand { get; set; }
         public ICommand UpdateBookCommand { get; set; }
         public ICommand DeleteBookCommand { get; set; }
         public ICommand LoadBooksCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
 
         public BookViewModel()
         {
-            // Khởi tạo danh sách sách từ cơ sở dữ liệu
-            Books = new ObservableCollection<Book>(DataProvider.Ins.DB.Books);
+            // Lưu dữ liệu ban đầu vào danh sách tạm
+            _allBooks = new ObservableCollection<Book>(DataProvider.Ins.DB.Books); ;
+            Books = new ObservableCollection<Book>(_allBooks); // Hiển thị ban đầu là toàn bộ sách
+
+            SearchCommand = new RelayCommand<string>(p => true, p => FilterBooks());
 
             // Định nghĩa các lệnh
             AddBookCommand = new RelayCommand<object>((p) =>
@@ -249,5 +268,19 @@ namespace QuanLyThuVien.ViewModels
             DateImport = null;
             Price = 0;
         }
+
+        // Chức năng tìm kiếm
+        private void FilterBooks()
+        {
+            // Lọc sách theo SearchText hoặc BookId
+            var filteredBooks = _allBooks.Where(b => string.IsNullOrEmpty(SearchText) ||
+                                                      b.BookName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                                                      b.Id.ToString().Contains(SearchText)).ToList();
+
+
+            // Cập nhật danh sách Books
+            Books = new ObservableCollection<Book>(filteredBooks);
+        }
+
     }
 }

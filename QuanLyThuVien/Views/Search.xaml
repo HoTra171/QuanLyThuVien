@@ -5,30 +5,50 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyThuVien"
              mc:Ignorable="d" 
+             
              x:Name="UserControl"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <!--Thanh tìm kiếm-->
         <Grid HorizontalAlignment="Stretch" Grid.Row="0" Margin="20,10,20,10">
-            <!-- TextBox ở bên dưới -->
-            <TextBox 
-                     x:Name="tbNhapTen" 
-                     Height="35"
-                     Padding="10,5,0,8"
-                     FontSize="16" 
-                     Foreground="Black" 
-                     Background="#6F85B6"
-                     BorderThickness="0"
-                     VerticalContentAlignment="Center"
-                     GotFocus="tbNhapTen_GotFocus" 
-                     LostFocus="tbNhapTen_LostFocus"
-                     />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*" MaxWidth="120"/>
+            </Grid.ColumnDefinitions>
 
-            <!-- Đường viền dưới màu đỏ -->
-            <Border BorderBrush="Red" BorderThickness="0,0,0,1" VerticalAlignment="Bottom" Margin="10,0,10,4"/>
+            <!-- TextBox ở bên dưới -->
+            <TextBox x:Name="tbNhapTen"
+                 Height="35"
+                 Padding="10,3,0,0"
+                 Margin="0,0,15,0"
+                 FontSize="16"
+                 Foreground="Black"
+                 Background="#6F85B6"
+                 BorderThickness="0"
+                 Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalContentAlignment="Center"
+                 GotFocus="tbNhapTen_GotFocus"
+                 LostFocus="tbNhapTen_LostFocus">   
+                <TextBox.Template>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- Nội dung TextBox -->
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="0">
+                                    <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" />
+                            </Border>
+
+                            <!-- Border dưới cùng -->
+                            <Border VerticalAlignment="Bottom" Height="1" Margin="10,0,10,5" Background="Red"/>
+                        </Grid>
+                    </ControlTemplate>
+                </TextBox.Template>
+            </TextBox>
+
 
             <!-- TextBlock ở trên TextBox -->
-            <TextBlock 
+            <TextBlock Grid.Row="0"
                        x:Name="tblNhapTen" 
                        Text="{Binding PlaceholderText, ElementName=UserControl}" 
                        HorizontalAlignment="Left" 
@@ -36,7 +56,10 @@
                        Foreground="Black" 
                        Margin="10,0,0,0"
                        FontSize="16" 
-                       MouseDown="tblNhapTen_MouseDown"/>   
+                       MouseDown="tblNhapTen_MouseDown"/>
+
+            <Button Content="Tìm kiếm" Grid.Column="1" Padding="0,0,0,0" Height="35" Command="{Binding SearchCommand}" IsDefault="true"/>
+
         </Grid>
     </Grid>
 </UserControl>
