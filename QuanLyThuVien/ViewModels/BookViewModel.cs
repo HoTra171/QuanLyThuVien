@@ -183,14 +183,24 @@ namespace QuanLyThuVien.ViewModels
             if (string.IsNullOrEmpty(BookName) || SelectedItem == null)
                     return false;
 
-                // Kiểm tra trùng tên sách
-                var isDuplicate = DataProvider.Ins.DB.Books.Any(x => x.BookName == BookName);
-                if (isDuplicate)
+            // Kiểm tra trùng tên sách
+            var isDuplicate = DataProvider.Ins.DB.Books.Any(x => x.BookName == BookName);
+            if (isDuplicate)
                     return false;
 
                 return true;
             },
             p => UpdateBook());
+
+            // Khởi tạo DeleteCommand
+            DeleteBookCommand = new RelayCommand<Book>(p =>
+            {
+                if (SelectedItem == null)
+                    return false;
+
+                return true;
+            },
+            p => DeleteBook());
         }
 
         //Phương thức thêm mới sách
@@ -221,6 +231,7 @@ namespace QuanLyThuVien.ViewModels
             DataProvider.Ins.DB.Books.Add(newBook);
             DataProvider.Ins.DB.SaveChanges();
             Books.Add(newBook);
+            _allBooks.Add(newBook);
             MessageBox.Show("Thêm sách thành công!");
 
             // Làm sạch các trường nhập liệu sau khi thêm
@@ -250,11 +261,28 @@ namespace QuanLyThuVien.ViewModels
             DataProvider.Ins.DB.SaveChanges();
             Books.Remove(SelectedItem);
             Books.Add(book);
+            _allBooks.Add(book);
             SelectedItem = book;
             OnPropertyChanged("Books");
 
             MessageBox.Show("Cập nhật sách thành công!");
             ClearFields();
+        }
+
+        //Xóa sách
+        private void DeleteBook()
+        {
+            var book = DataProvider.Ins.DB.Books.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+
+            if (book == null) return;
+
+            // Xóa sách khỏi cơ sở dữ liệu
+            DataProvider.Ins.DB.Books.Remove(book);
+            DataProvider.Ins.DB.SaveChanges();
+
+            // Xóa sách khỏi danh sách hiện tại
+            Books.Remove(book);
+            _allBooks.Remove(book);
         }
 
         //Xóa các trường nhập dữ liệu

@@ -170,6 +170,16 @@ namespace QuanLyThuVien.ViewModels
                 return true;
             },
             p => UpdateEmployee());
+
+            // Khởi tạo DeleteCommand
+            DeleteEmployeeCommand = new RelayCommand<Book>(p =>
+            {
+                if (SelectedItem == null)
+                    return false;
+
+                return true;
+            },
+            p => DeleteEmployee());
         }
 
         //Phương thức thêm mới sách
@@ -198,6 +208,7 @@ namespace QuanLyThuVien.ViewModels
             DataProvider.Ins.DB.Employees.Add(newEmployy);
             DataProvider.Ins.DB.SaveChanges();
             List.Add(newEmployy);
+            _allList.Add(newEmployy);
             MessageBox.Show("Thêm Nhân Viên thành công!");
 
             // Làm sạch các trường nhập liệu sau khi thêm
@@ -225,6 +236,7 @@ namespace QuanLyThuVien.ViewModels
             DataProvider.Ins.DB.SaveChanges();
             List.Remove(SelectedItem);
             List.Add(employy);
+            _allList.Add(employy);
             SelectedItem = employy;
             OnPropertyChanged("List");
 
@@ -240,6 +252,22 @@ namespace QuanLyThuVien.ViewModels
             UserAccount = string.Empty;
             Address = string.Empty;
             Dob = null;
+        }
+
+        //Xóa nhân viên 
+        private void DeleteEmployee()
+        {
+            var employee = DataProvider.Ins.DB.Employees.Where(x => x.EmployeeId == SelectedItem.EmployeeId).SingleOrDefault();
+
+            if (employee == null) return;
+
+            // Xóa sách khỏi cơ sở dữ liệu
+            DataProvider.Ins.DB.Employees.Remove(employee);
+            DataProvider.Ins.DB.SaveChanges();
+
+            // Xóa sách khỏi danh sách hiện tại
+            List.Remove(employee);
+            _allList.Remove(employee);
         }
 
         // Chức năng tìm kiếm

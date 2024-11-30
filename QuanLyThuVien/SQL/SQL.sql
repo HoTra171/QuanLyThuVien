@@ -23,7 +23,6 @@ CREATE TABLE EMPLOYEES (
     PHONE_NUMBER VARCHAR(255) NOT NULL UNIQUE,                -- Số điện thoại (Duy nhất)
     DOB DATETIME NOT NULL,                                    -- Ngày sinh
     USER_ACCOUNT NVARCHAR(255) NOT NULL,                      -- Tên tài khoản
-    FOREIGN KEY (USER_ACCOUNT) REFERENCES ACCOUNT_USER(USER_ACCOUNT) ON DELETE CASCADE -- Ràng buộc khóa ngoại với bảng ACCOUNT_USER
 );
 
 CREATE TABLE READER (
