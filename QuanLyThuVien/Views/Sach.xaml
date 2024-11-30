@@ -182,14 +182,6 @@
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
                     </DataGrid.Effect>
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Chọn">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
                         <DataGridTextColumn Header="Mã số" Binding="{Binding Id}" Width="auto"/>
                         <DataGridTextColumn Header="Tên sách" Binding="{Binding BookName}" Width="auto"/>
                         <DataGridTextColumn Header="Thể loại" Binding="{Binding Category}" Width="auto"/>

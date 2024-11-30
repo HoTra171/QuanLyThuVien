@@ -40,19 +40,20 @@
             <!--Thanh tìm kiếm-->
             <local:Search PlaceholderText="Nhập tên nhân viên..." />
 
-            <DataGrid ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+            <DataGrid ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay }"
                       AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10"  IsReadOnly ="true"   
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False">
                 <DataGrid.Effect>
                     <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
                 </DataGrid.Effect>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Mã Số" Binding="{Binding EmployeeId}" Width="auto"/>
-                    <DataGridTextColumn Header="Họ Tên" Binding="{Binding FullName}"  Width="auto"/>
+                    <DataGridTextColumn Header="Mã Số" Binding="{Binding Id}" Width="auto"/>
+                    <DataGridTextColumn Header="Họ Tên" Binding="{Binding UserAccount}"  Width="auto"/>
                     <DataGridTextColumn Header="Địa Chỉ" Binding="{Binding Address}" Width="auto"/>
                     <DataGridTextColumn Header="Điện Thoại" Binding="{Binding PhoneNumber}" Width="auto"/>
                     <DataGridTextColumn Header="Ngày Sinh" Binding="{Binding Dob}" Width="auto"/>
-                    <DataGridTextColumn Header="Tên Tài Khoản" Binding="{Binding UserAccount}" Width="auto"/>
+                    <DataGridTextColumn Header="Tên Tài Khoản" Binding="{Binding UserNameText}" Width="auto"/>
+                    <DataGridTextColumn Header="Mật Khẩu" Binding="{Binding PasswordText}" Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid> 
         </Grid>
@@ -61,14 +62,14 @@
         <Grid Grid.Column="2" Grid.Row="1" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="3.4*"/>
                 <RowDefinition Height="2.3*"/>
-                <RowDefinition Height="1.3*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Thông tin cơ bản" FontWeight="Bold" FontStyle="Italic" FontSize="18" Margin="20,5,20,0" Grid.Row="0"/>
 
             <!-- Book Info Section -->
-            <Grid Margin="20,10,20,0" Grid.Column="1" Background="#E3F0FF" VerticalAlignment="Top" Grid.Row="1">
+            <Grid Margin="20,5,20,0" Grid.Column="1" Background="#E3F0FF" VerticalAlignment="Top" Grid.Row="1">
                 <Grid.Effect>
                     <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
                 </Grid.Effect>
@@ -83,10 +84,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Họ tên" Margin="10,15,0,10" Grid.Column="0" Grid.Row="0"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Margin="0,0,10,10" Padding="0,10,0,0" Text="{Binding FullName}" materialDesign:HintAssist.Hint="Họ Và Tên" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox Grid.Column="1" Grid.Row="0" Margin="0,0,10,10" Padding="0,10,0,0" Text="{Binding UserAccount}" materialDesign:HintAssist.Hint="Họ Và Tên" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
 
                 <TextBlock Text="Địa chỉ" Margin="10,10,0,10" Grid.Column="0" Grid.Row="1"/>
@@ -101,10 +103,13 @@
                 <DatePicker Grid.Column="1" Grid.Row="3" Margin="0,-4,10,10" Padding="0,10,0,0" SelectedDate="{Binding Dob}" materialDesign:HintAssist.Hint="Ngày Sinh" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
                 <TextBlock Text="Tên tài khoản" Margin="10,10,0,10" Grid.Column="0" Grid.Row="4"/>
-                <TextBox Grid.Column="1" Grid.Row="4" Margin="0,-4,10,10" Padding="0,8,0,0" Text="{Binding UserAccount}" materialDesign:HintAssist.Hint="Tên Tài Khoản" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <TextBox Grid.Column="1" Grid.Row="4" Margin="0,-4,10,10" Padding="0,8,0,0" Text="{Binding UserNameText}" materialDesign:HintAssist.Hint="Tên Tài Khoản" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+
+                <TextBlock Text="Mật khẩu" Margin="10,10,0,10" Grid.Column="0" Grid.Row="5"/>
+                <TextBox Grid.Column="1" Grid.Row="5" Margin="0,-4,10,10" Padding="0,8,0,0" Text="{Binding PasswordText}" materialDesign:HintAssist.Hint="Mật Khẩu" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
             </Grid>
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" Margin="0,-10,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -115,10 +120,10 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 
-                <TextBlock Text="Quyền hạn sử dụng" FontWeight="Bold" FontStyle="Italic" FontSize="18" Margin="20,10,0,0" Grid.Row="0" Grid.Column="0"/>
+                <TextBlock Text="Quyền hạn sử dụng" FontWeight="Bold" FontStyle="Italic" FontSize="18" Margin="20,0,0,0" Grid.Row="0" Grid.Column="0"/>
                 <TextBox Text="Nhân Viên" Grid.Row="0" Grid.Column="1" Margin="20,5,20,0" Padding="0,8,0,0" materialDesign:HintAssist.Hint="Quyển Hạn" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
-                <StackPanel Grid.Row="1" Grid.Column="0" Margin="20,15,0,0">
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="20,10,0,0">
                     <CheckBox Content="Lập thẻ độc giả" />
                     <CheckBox Content="Tiếp nhận sách mới" Margin="0,10,0,0"/>
                     <CheckBox Content="Tra cứu sách" Margin="0,10,0,0"/>
@@ -126,7 +131,7 @@
                     <CheckBox Content="Nhận trả sách" Margin="0,10,0,0"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" >
+                <StackPanel Grid.Row="1" Grid.Column="1" >
                     <CheckBox Content="Lập phiếu thu tiền phạt"  Margin="0,10,0,0"/>
                     <CheckBox Content="Lập báo cáo"  Margin="0,10,0,0"/>
                     <CheckBox Content="Thay đổi quy định"  Margin="0,10,0,0"/>
@@ -145,7 +150,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Thao Tác" Grid.Row="0" Grid.Column="0" Margin="20,0,0,20" FontSize="18" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left"/>
+                <TextBlock Text="Thao Tác" Grid.Row="0" Grid.Column="0" Margin="20,-5,0,5" FontSize="18" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left"/>
                 <Button Background="#00BB9A" Width="100" Height="35" FontWeight="Bold" BorderThickness="0" Margin="0,0,10,0" Grid.Row="1" Grid.Column="0" 
                         Command="{Binding AddEmployeeCommand}">
                     <StackPanel Orientation="Horizontal">

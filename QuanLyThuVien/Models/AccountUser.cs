@@ -34,7 +34,7 @@ namespace QuanLyThuVien.Models
         public string PasswordText { get; set; }
         [Column("DOB")]
         [Required]
-        public DateTime Dob { get; set; }
+        public DateTime? Dob { get; set; }
 
         [Column("ROLE")]
         [Required]
@@ -44,5 +44,9 @@ namespace QuanLyThuVien.Models
         [Required]
         [MaxLength(255)]
         public string PhoneNumber { get; set; }
+
+        [Column("ADDRESS")]
+        [MaxLength(255)]
+        public string? Address { get; set; }
     }
 }

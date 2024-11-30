@@ -12,8 +12,8 @@ namespace QuanLyThuVien.ViewModels
 {
     internal class NhanVienViewModal : BaseViewModel
     {
-        public ObservableCollection<Employee> _List;
-        public ObservableCollection<Employee> List
+        public ObservableCollection<AccountUser> _List;
+        public ObservableCollection<AccountUser> List
         {
             get => _List;
             set
@@ -22,11 +22,11 @@ namespace QuanLyThuVien.ViewModels
                 OnPropertyChanged();
             }
         }
-        private ObservableCollection<Employee> _allList;
-        public ObservableCollection<Employee> FilteredEmployees { get; set; } = new ObservableCollection<Employee>();
+        private ObservableCollection<AccountUser> _allList;
+        public ObservableCollection<AccountUser> FilteredAccountUsers { get; set; } = new ObservableCollection<AccountUser>();
 
-        private Employee _SelectedItem;
-        public Employee SelectedItem
+        private AccountUser _SelectedItem;
+        public AccountUser SelectedItem
         {
             get => _SelectedItem;
             set
@@ -37,33 +37,34 @@ namespace QuanLyThuVien.ViewModels
                 // Cập nhật các thuộc tính khi chọn một dòng
                 if (SelectedItem != null)
                 {
-                    FullName = SelectedItem.FullName;
+                    UserAccount = SelectedItem.UserAccount;
                     Address = SelectedItem.Address;
                     PhoneNumber = SelectedItem.PhoneNumber;
                     Dob = SelectedItem.Dob;
-                    UserAccount = SelectedItem.UserAccount;
+                    UserNameText = SelectedItem.UserNameText;
+                    PasswordText = SelectedItem.PasswordText;
                 }
             }
         }
 
-        private int _employeeId;
-        public int EmployeeId
+        private int _Id;
+        public int Id
         {
-            get { return _employeeId; }
+            get { return _Id; }
             set
             {
-                _employeeId = value;
+                _Id = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _fullName;
-        public string FullName
+        private string _UserNameText;
+        public string UserNameText
         {
-            get { return _fullName; }
+            get { return _UserNameText; }
             set
             {
-                _fullName = value;
+                _UserNameText = value;
                 OnPropertyChanged();
             }
         }
@@ -112,6 +113,17 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
+        private string _PasswordText;
+        public string PasswordText
+        {
+            get { return _PasswordText; }
+            set
+            {
+                _PasswordText = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _searchText;
         public string SearchText
         {
@@ -120,7 +132,7 @@ namespace QuanLyThuVien.ViewModels
             {
                 _searchText = value;
                 OnPropertyChanged();
-                FilterEmployees();
+                FilterAccountUsers();
             }
         }
 
@@ -133,60 +145,55 @@ namespace QuanLyThuVien.ViewModels
         public NhanVienViewModal()
         {
             // Lưu dữ liệu ban đầu vào danh sách tạm
-            _allList = new ObservableCollection<Employee>(DataProvider.Ins.DB.Employees); ;
-            List = new ObservableCollection<Employee>(_allList); // Hiển thị ban đầu là toàn bộ sách
+            _allList = new ObservableCollection<AccountUser>(DataProvider.Ins.DB.AccountUsers.Where(user => user.Role != true)); 
+            List = new ObservableCollection<AccountUser>(_allList); // Hiển thị ban đầu là toàn bộ sách
 
-            SearchCommand = new RelayCommand<string>(p => true, p => FilterEmployees());
+            SearchCommand = new RelayCommand<string>(p => true, p => FilterAccountUsers());
 
             // Định nghĩa các lệnh
             AddEmployeeCommand = new RelayCommand<object>((p) =>
             {
-                if (string.IsNullOrEmpty(FullName))
+                if (string.IsNullOrEmpty(UserAccount))
                     return false;
 
                 if (SelectedItem != null)
                     return false;
 
                 // Kiểm tra trùng tên sách
-                var isDuplicate = DataProvider.Ins.DB.Employees.Any(x => x.FullName == FullName);
+                var isDuplicate = DataProvider.Ins.DB.AccountUsers.Any(x => x.UserAccount == UserAccount);
                 if (isDuplicate)
                     return false;
 
                 return true;
             },
-            (p) => AddEmployee());
+            (p) => AddAccountUser());
 
 
             UpdateEmployeeCommand = new RelayCommand<object>(p =>
             {
-                if (string.IsNullOrEmpty(FullName) || SelectedItem == null)
-                    return false;
-
-                // Kiểm tra trùng tên sách
-                var isDuplicate = DataProvider.Ins.DB.Employees.Any(x => x.FullName == FullName);
-                if (isDuplicate)
+                if (string.IsNullOrEmpty(UserAccount) || SelectedItem == null)
                     return false;
 
                 return true;
             },
-            p => UpdateEmployee());
+            p => UpdateAccountUser());
 
             // Khởi tạo DeleteCommand
-            DeleteEmployeeCommand = new RelayCommand<Book>(p =>
+            DeleteEmployeeCommand = new RelayCommand<AccountUser>(p =>
             {
                 if (SelectedItem == null)
                     return false;
 
                 return true;
             },
-            p => DeleteEmployee());
+            p => DeleteAccountUser());
         }
 
         //Phương thức thêm mới sách
-        private void AddEmployee()
+        private void AddAccountUser()
         {
             // Kiểm tra nếu tất cả thông tin đã hợp lệ
-            if (string.IsNullOrWhiteSpace(FullName) || string.IsNullOrWhiteSpace(Address) ||
+            if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) || string.IsNullOrWhiteSpace(PasswordText) ||
                 string.IsNullOrWhiteSpace(PhoneNumber) || string.IsNullOrWhiteSpace(UserAccount) ||
                 !Dob.HasValue)
             {
@@ -196,16 +203,17 @@ namespace QuanLyThuVien.ViewModels
             }
 
             // Thực hiện thao tác thêm sách vào cơ sở dữ liệu hoặc danh sách
-            Employee newEmployy = new Employee()
+            AccountUser newEmployy = new AccountUser()
             {
-                FullName = FullName,
-                PhoneNumber = PhoneNumber,
+                PasswordText = PasswordText,
                 UserAccount = UserAccount,
+                PhoneNumber = PhoneNumber,
+                UserNameText = UserNameText,
                 Address = Address,
                 Dob = Dob.Value,
             };
 
-            DataProvider.Ins.DB.Employees.Add(newEmployy);
+            DataProvider.Ins.DB.AccountUsers.Add(newEmployy);
             DataProvider.Ins.DB.SaveChanges();
             List.Add(newEmployy);
             _allList.Add(newEmployy);
@@ -216,11 +224,11 @@ namespace QuanLyThuVien.ViewModels
         }
 
         // Phương thức cập nhật cuốn sách đã chọn
-        private void UpdateEmployee()
+        private void UpdateAccountUser()
         {
-            var employy = DataProvider.Ins.DB.Employees.Where(x => x.EmployeeId == SelectedItem.EmployeeId).SingleOrDefault();
+            var employy = DataProvider.Ins.DB.AccountUsers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
             // Kiểm tra nếu tất cả thông tin đã hợp lệ
-            if (string.IsNullOrWhiteSpace(FullName) || string.IsNullOrWhiteSpace(Address) ||
+            if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) || string.IsNullOrWhiteSpace(PasswordText) ||
                 string.IsNullOrWhiteSpace(PhoneNumber) || string.IsNullOrWhiteSpace(UserAccount) ||
                 !Dob.HasValue)
             {
@@ -228,9 +236,10 @@ namespace QuanLyThuVien.ViewModels
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin cho Nhân Viên.");
                 return;
             }
-            employy.FullName = FullName;
-            employy.PhoneNumber = PhoneNumber;
+            employy.PasswordText = PasswordText;
             employy.UserAccount = UserAccount;
+            employy.PhoneNumber = PhoneNumber;
+            employy.UserNameText = UserNameText;
             employy.Address = Address;
             employy.Dob = Dob.Value;
             DataProvider.Ins.DB.SaveChanges();
@@ -247,40 +256,44 @@ namespace QuanLyThuVien.ViewModels
         //Xóa các trường nhập dữ liệu
         private void ClearFields()
         {
-            FullName = string.Empty;
-            PhoneNumber = string.Empty;
+            PasswordText = string.Empty;
             UserAccount = string.Empty;
+            PhoneNumber = string.Empty;
+            UserNameText = string.Empty;
             Address = string.Empty;
             Dob = null;
         }
 
         //Xóa nhân viên 
-        private void DeleteEmployee()
+        private void DeleteAccountUser()
         {
-            var employee = DataProvider.Ins.DB.Employees.Where(x => x.EmployeeId == SelectedItem.EmployeeId).SingleOrDefault();
+            var AccountUser = DataProvider.Ins.DB.AccountUsers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
 
-            if (employee == null) return;
+            if (AccountUser == null) return;
 
             // Xóa sách khỏi cơ sở dữ liệu
-            DataProvider.Ins.DB.Employees.Remove(employee);
+            DataProvider.Ins.DB.AccountUsers.Remove(AccountUser);
             DataProvider.Ins.DB.SaveChanges();
 
             // Xóa sách khỏi danh sách hiện tại
-            List.Remove(employee);
-            _allList.Remove(employee);
+            List.Remove(AccountUser);
+            _allList.Remove(AccountUser);
+
+            MessageBox.Show("Xóa Nhân Viên thành công!");
+            ClearFields();
         }
 
         // Chức năng tìm kiếm
-        private void FilterEmployees()
+        private void FilterAccountUsers()
         {
             // Lọc sách theo SearchText hoặc BookId
-            var FilteredEmployees = _allList.Where(b => string.IsNullOrEmpty(SearchText) ||
-                                                      b.FullName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                                                      b.EmployeeId.ToString().Contains(SearchText)).ToList();
+            var FilteredAccountUsers = _allList.Where(b => string.IsNullOrEmpty(SearchText) ||
+                                                      b.UserAccount.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                                                      b.Id.ToString().Contains(SearchText)).ToList();
 
 
             // Cập nhật danh sách Books
-            List = new ObservableCollection<Employee>(FilteredEmployees);
+            List = new ObservableCollection<AccountUser>(FilteredAccountUsers);
         }
     }
 }

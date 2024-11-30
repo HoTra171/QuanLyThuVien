@@ -25,5 +25,18 @@ namespace QuanLyThuVien
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MuonSach muon = new MuonSach();
+            muon.Show();
+
+            Window hi = MuonSach.GetWindow(this);
+            if (hi != null)
+            {
+                // Đóng cửa sổ cha
+                hi.Close();
+            }
+        }
     }
 }

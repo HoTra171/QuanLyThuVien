@@ -154,7 +154,7 @@ namespace QuanLyThuVien.ViewModels
         public BookViewModel()
         {
             // Lưu dữ liệu ban đầu vào danh sách tạm
-            _allBooks = new ObservableCollection<Book>(DataProvider.Ins.DB.Books); ;
+            _allBooks = new ObservableCollection<Book>(DataProvider.Ins.DB.Books); 
             Books = new ObservableCollection<Book>(_allBooks); // Hiển thị ban đầu là toàn bộ sách
 
             SearchCommand = new RelayCommand<string>(p => true, p => FilterBooks());
@@ -181,11 +181,6 @@ namespace QuanLyThuVien.ViewModels
             UpdateBookCommand = new RelayCommand<object>(p =>
             {
             if (string.IsNullOrEmpty(BookName) || SelectedItem == null)
-                    return false;
-
-            // Kiểm tra trùng tên sách
-            var isDuplicate = DataProvider.Ins.DB.Books.Any(x => x.BookName == BookName);
-            if (isDuplicate)
                     return false;
 
                 return true;
@@ -283,6 +278,9 @@ namespace QuanLyThuVien.ViewModels
             // Xóa sách khỏi danh sách hiện tại
             Books.Remove(book);
             _allBooks.Remove(book);
+
+            MessageBox.Show("Xóa sách thành công!");
+            ClearFields();
         }
 
         //Xóa các trường nhập dữ liệu

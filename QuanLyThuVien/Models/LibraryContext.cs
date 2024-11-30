@@ -16,7 +16,6 @@ namespace QuanLyThuVien.Models
         public DbSet<Book> Books { get; set; }
         public DbSet<CardReader> CardReaders { get; set; }
         public DbSet<ListBorrowed> ListBorrowed { get; set; }
-        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
