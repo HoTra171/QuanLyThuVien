@@ -14,7 +14,6 @@ namespace QuanLyThuVien.Models
         public DbSet<AccountUser> AccountUsers { get; set; }
         public DbSet<Reader> Readers { get; set; }
         public DbSet<Book> Books { get; set; }
-        public DbSet<CardReader> CardReaders { get; set; }
         public DbSet<ListBorrowed> ListBorrowed { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,23 +27,27 @@ namespace QuanLyThuVien.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CardReader>()
-                .HasOne(cr => cr.Reader)
-                .WithMany(r => r.CardReaders)
-                .HasForeignKey(cr => cr.IdReader)
-                .OnDelete(DeleteBehavior.Cascade);
 
+
+
+            // Tạo chỉ mục UNIQUE cho USER_ACCOUNT
+            modelBuilder.Entity<AccountUser>()
+                .HasIndex(au => au.UserAccount)
+                .IsUnique();
+
+            // Cấu hình quan hệ READER -> LIST_BORROWED
             modelBuilder.Entity<ListBorrowed>()
-                .HasOne(lb => lb.CardReader)
-                .WithMany(cr => cr.ListBorrowed)
-                .HasForeignKey(lb => lb.IdCard)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(lb => lb.Reader)
+                .WithMany(r => r.ListBorrowed)
+                .HasForeignKey(lb => lb.IdReader)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa cascade khi Reader bị xóa
 
+            // Cấu hình quan hệ BOOK -> LIST_BORROWED
             modelBuilder.Entity<ListBorrowed>()
                 .HasOne(lb => lb.Book)
                 .WithMany(b => b.ListBorrowed)
                 .HasForeignKey(lb => lb.IdBook)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.SetNull); // Set NULL khi Book bị xóa
         }
     }
 }

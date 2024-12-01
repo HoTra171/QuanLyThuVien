@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.ObjectModel;
 
 namespace QuanLyThuVien.Models
 {
@@ -44,15 +45,10 @@ namespace QuanLyThuVien.Models
         public string? Address { get; set; }
 
         //V
-        [Column("DEBT")]
-        [MaxLength(255)]
-        public Decimal? Debt { get; set; }
-
-        //V
         [Column("READERTYPE")]
         [MaxLength(255)]
         public string? ReaderType { get; set; }
 
-        public ICollection<CardReader> CardReaders { get; set; }
+        public ICollection<ListBorrowed> ListBorrowed { get; set; }
     }
 }
