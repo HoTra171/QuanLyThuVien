@@ -8,27 +8,36 @@ using System.Threading.Tasks;
 
 namespace QuanLyThuVien.Models
 {
- public   class ListBorrowed
+
+    [Table("LIST_BORROWED")]
+    public class ListBorrowed
     {
-        [Key]
-        public int Id { get; set; }
+            [Column("ID")]
+            [Key]
+            public int Id { get; set; }
 
-        [Required]
-        public int IdCard { get; set; }
+            [Column("ID_READER")]
+            [Required]
+            public int IdReader { get; set; }
+            public Reader Reader { get; set; } // Khóa ngoại đến CardReader
 
-        public int? IdBook { get; set; }
-        public bool StatusBorrow { get; set; }
+            [Column("ID_BOOK")]
+            [Required]
+            public int IdBook { get; set; }
+            public Book Book { get; set; } // Khóa ngoại đến Book
 
-        [Required]
-        public DateTime DateBorrowed { get; set; }
+            [Column("DATE_BORROWED")]
+            [Required]
+            public DateTime DateBorrowed { get; set; }
 
-        [Required]
-        public DateTime DateExpired { get; set; }
 
-        [ForeignKey("IdCard")]
-        public CardReader CardReader { get; set; }
+            [Column("DATE_EXPIRED")]
+            [Required]
+            public DateTime DateExpired { get; set; }
 
-        [ForeignKey("IdBook")]
-        public Book Book { get; set; }
+            [Column("STATUS_BORROW")]
+            [Required]
+            public bool Status { get; set; }
+
     }
 }

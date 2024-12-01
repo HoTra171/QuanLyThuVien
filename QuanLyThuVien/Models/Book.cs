@@ -12,7 +12,7 @@ namespace QuanLyThuVien.Models
 {
 
     [Table("BOOK")]
-    public class Book : INotifyPropertyChanged
+    public class Book 
     {
         [Key]
         [Column("ID")]
@@ -48,28 +48,6 @@ namespace QuanLyThuVien.Models
         public decimal? Price { get; set; }
 
         public ICollection<ListBorrowed> ListBorrowed { get; set; }
-
-        [Column("ISSELECTED")]
-        private bool _isSelected;
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set
-            {
-                if (_isSelected != value)
-                {
-                    _isSelected = value;
-                    OnPropertyChanged(nameof(_isSelected));
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
 
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Formats.Tar;
 
 namespace QuanLyThuVien.Models
 {
@@ -53,6 +54,7 @@ namespace QuanLyThuVien.Models
         [MaxLength(255)]
         public string? ReaderType { get; set; }
 
-        public ICollection<CardReader> CardReaders { get; set; }
+        public ICollection<ListBorrowed> ListBorrowed { get; set; }
+
     }
 }

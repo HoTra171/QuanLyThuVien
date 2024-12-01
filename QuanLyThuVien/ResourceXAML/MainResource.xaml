@@ -5,4 +5,5 @@
     <viewmodel:BookViewModel x:Key="BookVM" />
     <viewmodel:NhanVienViewModal x:Key="NhanVienVM" />
     <viewmodel:DocGiaViewModal x:Key="DocGiaVM" />
+    <viewmodel:BaoCaoViewModal x:Key="BaoCaoVM" />
 </ResourceDictionary>
