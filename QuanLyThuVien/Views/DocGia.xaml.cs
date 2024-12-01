@@ -29,6 +29,19 @@ namespace QuanLyThuVien
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
             e.Handled = true;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            BaoCao muon = new BaoCao();
+            muon.Show();
+
+            Window hi = MuonSach.GetWindow(this);
+            if (hi != null)
+            {
+                // Đóng cửa sổ cha
+                hi.Close();
+            }
+        }
     }
 }
 

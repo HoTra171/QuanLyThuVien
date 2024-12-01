@@ -16,15 +16,6 @@ CREATE TABLE ACCOUNT_USER (
 
 CREATE UNIQUE INDEX IX_USER_ACCOUNT ON ACCOUNT_USER (USER_ACCOUNT);
 
-CREATE TABLE EMPLOYEES (
-    EMPLOYEE_ID INT PRIMARY KEY IDENTITY(1,1),              -- Mã số nhân viên (Khóa chính)
-    FULL_NAME NVARCHAR(255) NOT NULL,                         -- Họ tên nhân viên
-    ADDRESS NVARCHAR(255),                                    -- Địa chỉ
-    PHONE_NUMBER VARCHAR(255) NOT NULL UNIQUE,                -- Số điện thoại (Duy nhất)
-    DOB DATETIME NOT NULL,                                    -- Ngày sinh
-    USER_ACCOUNT NVARCHAR(255) NOT NULL,                      -- Tên tài khoản
-);
-
 CREATE TABLE READER (
     ID INT PRIMARY KEY IDENTITY(1,1),
     USER_NAME_TEXT VARCHAR(255) NOT NULL,
