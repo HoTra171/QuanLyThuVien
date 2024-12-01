@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:QuanLyThuVien"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="MuonSach" Height="600" Width="1000">
-    <Grid>
+         DataContext="{StaticResource MuonSachVM}" Title="MuonSach" Height="600" Width="1000">
+    <Grid> 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
@@ -48,18 +48,21 @@
                 <!--thanh tìm kiếm-->
                 <local:Search PlaceholderText="Nhập tên sách muốn mượn..." />
 
-                <DataGrid AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10"  
+                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10" ItemsSource="{Binding ListBook}"
                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False">
                     <DataGrid.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
                     </DataGrid.Effect>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã số" Binding="{Binding Number}" Width="auto"/>
-                        <DataGridTextColumn Header="Tên sách" Binding="{Binding BookTitle}" Width="*"/>
+                        <DataGridTextColumn Header="Mã sách" Binding="{Binding Id}" Width="*"/>
+                        <DataGridTextColumn Header="Tên sách" Binding="{Binding BookName}" Width="*"/>
                         <DataGridTextColumn Header="Thể loại" Binding="{Binding Category}" Width="*"/>
-                        <DataGridTextColumn Header="Nhà XB" Binding="{Binding Publisher}" Width="*"/>
                         <DataGridTextColumn Header="Tác giả" Binding="{Binding Author}" Width="*"/>
-                        <DataGridTextColumn Header="Ngày XB" Binding="{Binding PublishDate}" Width="*"/>
+                        <DataGridTextColumn Header="Nhà XB" Binding="{Binding Publisher}" Width="*"/>
+                        <DataGridTextColumn Header="Ngày XB" Binding="{Binding DatePublish}" Width="*"/>
+                        <DataGridTextColumn Header="Ngày Nhập" Binding="{Binding DateImport}" Width="*"/>
+                        <DataGridTextColumn Header="Giá" Binding="{Binding Price}" Width="*"/>
+                       
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -73,20 +76,50 @@
                 <TextBlock Text="Thông tin độc giả" Margin="0,0,0,10" FontWeight="Bold" FontStyle="Italic" FontSize="18" Grid.Row="0"/>
 
                 <!--Nhập thông tin độc giả -->
-                <DataGrid AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="0,0,0,10"  
-                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False">
-                    <DataGrid.Effect>
-                        <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
-                    </DataGrid.Effect>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã số" Binding="{Binding Number}" Width="auto"/>
-                        <DataGridTextColumn Header="Tên sách" Binding="{Binding BookTitle}" Width="*"/>
-                        <DataGridTextColumn Header="Thể loại" Binding="{Binding Category}" Width="*"/>
-                        <DataGridTextColumn Header="Nhà XB" Binding="{Binding Publisher}" Width="*"/>
-                        <DataGridTextColumn Header="Tác giả" Binding="{Binding Author}" Width="*"/>
-                        <DataGridTextColumn Header="Ngày XB" Binding="{Binding PublishDate}" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Grid VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" DataContext="{StaticResource DocGiaVM}" Background="#E3F0FF">
+             
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Mã số:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="0" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Id}" Grid.Column="1" Grid.Row="0" Margin="0,10,10,10"/>
+
+                    <TextBlock Text="Họ Tên:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="1" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding UserNameText}" Grid.Column="1" Grid.Row="1" Margin="0,10,10,10"/>
+
+                    <TextBlock Text="Địa Chỉ:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="2" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Address}" Grid.Column="1" Grid.Row="2" Margin="0,10,10,10"/>
+
+                    <TextBlock Text="Email:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="3" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Email}" Grid.Column="1" Grid.Row="3" Margin="0,10,10,10"/>
+
+                    <TextBlock Text="Ngày Sinh:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="4" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Dob}" Grid.Column="1" Grid.Row="4" Margin="0,10,10,10"/>
+
+                    <TextBlock Text="Ngày Lập Thẻ:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="5" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding DateCreated}" Grid.Column="1" Grid.Row="5" Margin="0,10,10,10"/>
+
+                    <TextBlock Text="Debt:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="6" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Debt}" Grid.Column="1" Grid.Row="6" Margin="0,10,10,10"/>
+
+                    <TextBlock Text="Loại Đọc Giả:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="7" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding ReaderType}" Grid.Column="1" Grid.Row="7" Margin="0,10,10,10"/>
+                </Grid>
+
             </Grid>
 
             <!--các button-->
@@ -96,23 +129,9 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Border CornerRadius="2" Background="#E5001F" Width="140" Height="35" Grid.Row="0">
-                    <Button Background="Transparent" Foreground="White" BorderThickness="0">
-                        <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
-                            <Image Source="\icon\MuonSach\no.png" Width="24"/>
-                            <TextBlock Text="Tổng tiền nợ" Foreground="White" Margin="10,2,0,0"/>
-                        </StackPanel>
-                    </Button>
-                </Border>
+              
 
-                <Border CornerRadius="2" Background="#32AC26" Width="140" Height="35" Grid.Row="1">
-                    <Button Background="Transparent" Foreground="White" BorderThickness="0">
-                        <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
-                            <Image Source="\icon\MuonSach\trano.png" Width="24" Margin="0,0,0,6"/>
-                            <TextBlock Text="Trả nợ" Foreground="White" Margin="10,2,0,0"/>
-                        </StackPanel>
-                    </Button>
-                </Border>
+               
 
                 <Border CornerRadius="2" Background="#00BB9A" Width="140" Height="35" Grid.Row="2">
                     <Button Background="Transparent" Foreground="White" BorderThickness="0">

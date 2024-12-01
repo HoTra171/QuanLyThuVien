@@ -34,10 +34,6 @@ namespace QuanLyThuVien.ViewModels
             _execute = execute;
         }
 
-        public RelayCommand(Action updateBook)
-        {
-            this.updateBook = updateBook;
-        }
 
         public bool CanExecute(object parameter)
         {
