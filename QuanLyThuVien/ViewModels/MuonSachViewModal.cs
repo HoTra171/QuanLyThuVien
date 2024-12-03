@@ -3,7 +3,9 @@ using QuanLyThuVien.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
@@ -67,7 +69,42 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
+
+        private int _BookId;
+        public int BookId
+        {
+            get => _BookId;
+            set
+            {
+                _BookId = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private Book _selectBookItem;
+        public Book SelectBookItem
+        {
+            get => _selectBookItem;
+            set
+            {
+                _selectBookItem = value;
+                OnPropertyChanged();
+
+                // Cập nhật các thuộc tính khi chọn một dòng
+                if (SelectBookItem != null)
+                {
+                    BookId = SelectBookItem.Id;
+                }
+
+            }
+            
+        }
+
         public ICommand SearchCommand { get; set; }
+        public ICommand BooksBorrow { get; set; }
+
+
 
         public MuonSachViewModal()
         {
@@ -90,6 +127,33 @@ namespace QuanLyThuVien.ViewModels
                 // Tải dữ liệu dựa trên ReaderId nếu cần
                 LoadReaderData(ReaderId);
             });
+
+
+            BooksBorrow = new RelayCommand<object>((p) =>
+            {
+
+                if (SelectBookItem == null)
+                    return false;
+
+                return true;
+            },
+            (p) => AddListBorrow());
+
+
+        }
+
+        private void AddListBorrow()
+        {
+
+            var book = DataProvider.Ins.DB.Books.Where(p => p.Id == SelectBookItem.Id);
+            var bookBorrow = new ListBorrowed();
+            bookBorrow.IdReader = ReaderId;
+            var a = book;
+
+
+            //ListBorrowed.Add(book);
+
+            //}
         }
 
         private void LoadReaderData(int readerId)

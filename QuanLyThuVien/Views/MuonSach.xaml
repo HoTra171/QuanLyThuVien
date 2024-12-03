@@ -49,6 +49,7 @@
                 <local:Search PlaceholderText="Nhập tên sách muốn mượn..." />
 
                 <DataGrid IsReadOnly="True" AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10" ItemsSource="{Binding ListBook}"
+                          SelectedItem="{Binding SelectBookItem, Mode=TwoWay}"
                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False">
                     <DataGrid.Effect>
                         <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
@@ -130,7 +131,23 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
+                <Border CornerRadius="2" Background="Blue" Width="140" Height="35" Grid.Row="0">
+                    <Button Background="Transparent" Foreground="White" BorderThickness="0" Command="{Binding BooksBorrow}">
+                        <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
+                            <Image Source="\icon\MuonSach\no.png" Width="24"/>
+                            <TextBlock Text="Mượn sách" Foreground="White" Margin="10,3,0,0"/>
+                        </StackPanel>
+                    </Button>
+                </Border>
 
+                <Border CornerRadius="2" Background="Red" Width="140" Height="35" Grid.Row="1">
+                    <Button Background="Transparent" Foreground="White" BorderThickness="0">
+                        <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
+                            <Image Source="\icon\MuonSach\trano.png" Width="24"/>
+                            <TextBlock Text="Trả sách" Foreground="White" Margin="10,3,0,0"/>
+                        </StackPanel>
+                    </Button>
+                </Border>
 
 
                 <Border CornerRadius="2" Background="#00BB9A" Width="140" Height="35" Grid.Row="2">
