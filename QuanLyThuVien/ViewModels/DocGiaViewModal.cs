@@ -1,4 +1,6 @@
-﻿using QuanLyThuVien.Models;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Identity.Client;
+using QuanLyThuVien.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,8 +24,21 @@ namespace QuanLyThuVien.ViewModels
                 OnPropertyChanged();
             }
         }
+
+
         private ObservableCollection<Reader> _allList;
         public ObservableCollection<Reader> FilteredReaders { get; set; } = new ObservableCollection<Reader>();
+
+        public ObservableCollection<Reader> _Reader;
+        public ObservableCollection<Reader> Reader
+        {
+            get => _Reader;
+            set
+            {
+                _Reader = value;
+                OnPropertyChanged();
+            }
+        }
 
         private Reader _SelectedItem;
         public Reader SelectedItem
@@ -37,10 +52,10 @@ namespace QuanLyThuVien.ViewModels
                 // Cập nhật các thuộc tính khi chọn một dòng
                 if (SelectedItem != null)
                 {
+                    Id = SelectedItem.Id;
                     UserNameText = SelectedItem.UserNameText;
                     Address = SelectedItem.Address;
                     Email = SelectedItem.Email;
-                    Debt = SelectedItem.Debt;
                     ReaderType = SelectedItem.ReaderType;
                     Dob = SelectedItem.Dob;
                     DateCreated = SelectedItem.DateCreated;
@@ -92,16 +107,6 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
-        private decimal? _Debt;
-        public decimal? Debt
-        {
-            get { return _Debt; }
-            set
-            {
-                _Debt = value;
-                OnPropertyChanged();
-            }
-        }
 
         private string _ReaderType;
         public string ReaderType
@@ -148,11 +153,25 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
+        public class ReaderIdMessage
+        {
+            public int ReaderId { get; set; }
+
+            public ReaderIdMessage(int readerId)
+            {
+                ReaderId = readerId;
+            }
+        }
+
+
         // Các lệnh cho chức năng Thêm, Cập nhật, Xóa và Tải sách
         public ICommand AddReaderCommand { get; set; }
         public ICommand UpdateReaderCommand { get; set; }
         public ICommand DeleteReaderCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand ShowReaderCommand { get; set; }
+
+
 
         public DocGiaViewModal()
         {
@@ -202,13 +221,46 @@ namespace QuanLyThuVien.ViewModels
                 return true;
             },
             p => DeleteReader());
+
+            //xem chi tiết độc giả
+            ShowReaderCommand = new RelayCommand<Reader>(p =>
+            {
+                if (SelectedItem != null)
+                    return true;
+                if (SelectedItem == null)
+                    return false;
+                return true;
+            },
+            p => ShowReader());
         }
+
+        private void ShowReader()
+        {
+            // Giả sử `reader` là một đối tượng kiểu `Reader`
+            var reader = DataProvider.Ins.DB.Readers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
+
+            if (Reader == null)
+            {
+                Reader = new ObservableCollection<Reader>();
+            }
+
+            if (reader != null)
+            {
+                Reader.Clear(); // Xóa dữ liệu cũ trong danh sách
+                Reader.Add(reader); // Thêm đối tượng `reader` vào danh sách
+
+                // Gửi tin nhắn chứa Id
+                WeakReferenceMessenger.Default.Send(new ReaderIdMessage(reader.Id));
+            }
+
+        }
+
 
         //Phương thức thêm mới sách
         private void AddReader()
         {
             // Kiểm tra nếu tất cả thông tin đã hợp lệ
-            if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) || !Debt.HasValue ||
+            if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) ||
                 string.IsNullOrWhiteSpace(ReaderType) || string.IsNullOrWhiteSpace(Email) || !Dob.HasValue || !DateCreated.HasValue)
             {
                 // Hiển thị thông báo lỗi (có thể dùng MessageBox hoặc Notification)
@@ -222,11 +274,10 @@ namespace QuanLyThuVien.ViewModels
                 UserNameText = UserNameText,
                 Address = Address,
                 Email = Email,
-                Debt = Debt,
                 ReaderType = ReaderType,
                 Dob = Dob,
                 DateCreated = DateCreated,
-        };
+            };
 
             DataProvider.Ins.DB.Readers.Add(newReader);
             DataProvider.Ins.DB.SaveChanges();
@@ -243,7 +294,7 @@ namespace QuanLyThuVien.ViewModels
         {
             var reader = DataProvider.Ins.DB.Readers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
             // Kiểm tra nếu tất cả thông tin đã hợp lệ
-            if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) || !Debt.HasValue ||
+            if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) ||
                 string.IsNullOrWhiteSpace(ReaderType) || string.IsNullOrWhiteSpace(Email) || !Dob.HasValue || !DateCreated.HasValue)
             {
                 // Hiển thị thông báo lỗi (có thể dùng MessageBox hoặc Notification)
@@ -253,7 +304,6 @@ namespace QuanLyThuVien.ViewModels
             reader.UserNameText = UserNameText;
             reader.Address = Address;
             reader.Email = Email;
-            reader.Debt = Debt;
             reader.ReaderType = ReaderType;
             reader.Dob = Dob;
             reader.DateCreated = DateCreated;
@@ -272,9 +322,8 @@ namespace QuanLyThuVien.ViewModels
         private void ClearFields()
         {
             UserNameText = string.Empty;
-            Address = string.Empty; 
+            Address = string.Empty;
             Email = string.Empty;
-            Debt = null;
             ReaderType = string.Empty;
             Dob = null;
             DateCreated = null;

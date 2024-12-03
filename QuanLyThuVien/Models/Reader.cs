@@ -45,11 +45,6 @@ namespace QuanLyThuVien.Models
         public string? Address { get; set; }
 
         //V
-        [Column("DEBT")]
-        [MaxLength(255)]
-        public Decimal? Debt { get; set; }
-
-        //V
         [Column("READERTYPE")]
         [MaxLength(255)]
         public string? ReaderType { get; set; }

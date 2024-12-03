@@ -54,9 +54,9 @@ namespace QuanLyThuVien.ViewModels
                     var user = DataProvider.Ins.DB.AccountUsers
                                 .FirstOrDefault(x => x.UserNameText == UserName && x.PasswordText == passEncode);
 
-                    Role = user.Role;
                     if (user != null)
                     {
+                        Role = user.Role;
                         loginWindow.Hide(); // Ẩn cửa sổ đăng nhập
                         mainWindow.ShowDialog(); // Hiển thị cửa sổ chính
                         loginWindow.Close(); // Đóng cửa sổ đăng nhập

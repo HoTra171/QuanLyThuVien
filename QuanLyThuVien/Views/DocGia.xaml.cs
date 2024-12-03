@@ -23,7 +23,7 @@ namespace QuanLyThuVien
         {
             InitializeComponent();
         }
-        
+
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
@@ -42,6 +42,23 @@ namespace QuanLyThuVien
                 hi.Close();
             }
         }
+
+        private void ButtonDetail_Click(object sender, RoutedEventArgs e)
+        {
+            MuonSach muon = new MuonSach();
+            muon.Show();
+
+            Window hi = MuonSach.GetWindow(this);
+            if (hi != null)
+            {
+                // Đóng cửa sổ cha
+                hi.Close();
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
-
