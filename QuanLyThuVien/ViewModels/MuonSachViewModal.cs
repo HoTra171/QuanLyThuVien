@@ -1,5 +1,4 @@
-
-﻿using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using QuanLyThuVien.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using static QuanLyThuVien.ViewModels.DocGiaViewModal;
-
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace QuanLyThuVien.ViewModels
@@ -47,6 +45,7 @@ namespace QuanLyThuVien.ViewModels
                 OnPropertyChanged();
             }
         }
+
 
         private string _searchText;
         public string SearchText
@@ -154,14 +153,11 @@ namespace QuanLyThuVien.ViewModels
         public ICommand SearchCommand { get; set; }
         public ICommand BooksBorrow { get; set; }
         public ICommand ReturnBook { get; set; }
-        public ICommand SaveCommand { get; set; }
-
 
 
         public MuonSachViewModal()
         {
-            _allListBorrowd = new ObservableCollection<ListBorrowed>(DataProvider.Ins.DB.ListBorrowed);
-            ListBorrowed = new ObservableCollection<ListBorrowed>(_allListBorrowd); // Hiển thị ban đầu là toàn bộ sách
+            ListBorrowed = new ObservableCollection<ListBorrowed>(DataProvider.Ins.DB.ListBorrowed); // Hiển thị ban đầu là toàn bộ sách
 
 
             // Lưu dữ liệu ban đầu vào danh sách tạm
@@ -203,19 +199,7 @@ namespace QuanLyThuVien.ViewModels
             },
             (p) => ReturnListBook());
 
-
-            SaveCommand = new RelayCommand<object>((p) =>
-            {
-                return true;
-            },
-            (p) => DataProvider.Ins.DB.SaveChanges());
-
         }
-
-        
-
-
-        
 
         private void ReturnListBook()
         {
@@ -225,7 +209,7 @@ namespace QuanLyThuVien.ViewModels
 
             // Xóa sách khỏi cơ sở dữ liệu
             DataProvider.Ins.DB.ListBorrowed.Remove(BookBorrow);
-
+            DataProvider.Ins.DB.SaveChanges();
             // Xóa sách khỏi danh sách hiện tại
             ListBorrowed.Remove(BookBorrow);
             MessageBox.Show("Trả sách thành công");
@@ -248,6 +232,7 @@ namespace QuanLyThuVien.ViewModels
             };
 
             DataProvider.Ins.DB.ListBorrowed.Add(newBookBorrow);
+            DataProvider.Ins.DB.SaveChanges();
             ListBorrowed.Add(newBookBorrow);
             MessageBox.Show("Đã Mượn Sách");
 
@@ -255,7 +240,7 @@ namespace QuanLyThuVien.ViewModels
 
         private void LoadReaderData(int readerId)
         {
-            var listBorrowedReader = _allListBorrowd.Where(x => x.IdReader == ReaderId).ToList();
+            var listBorrowedReader = ListBorrowed.Where(x => x.IdReader == ReaderId).ToList();
             ListBorrowed = new ObservableCollection<ListBorrowed>(listBorrowedReader);
         }
 
