@@ -153,6 +153,7 @@ namespace QuanLyThuVien.ViewModels
         public ICommand SearchCommand { get; set; }
         public ICommand BooksBorrow { get; set; }
         public ICommand ReturnBook { get; set; }
+        public ICommand distroyCommand { get; set; }
 
 
         public MuonSachViewModal()
@@ -198,6 +199,17 @@ namespace QuanLyThuVien.ViewModels
                 return true;
             },
             (p) => ReturnListBook());
+
+            distroyCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            },
+            (p) =>
+            {
+                SelectBookBorrowItem = null;
+                SelectBookItem = null;
+            });
+
 
         }
 
