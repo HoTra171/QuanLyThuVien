@@ -109,12 +109,33 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DockPanel Grid.Column="0" Grid.Row="3" VerticalAlignment="Bottom" Margin="0 0 0 8">
-                <Label Content="Tổng số lượt mượn:" FontWeight="Bold" VerticalContentAlignment="Bottom" HorizontalAlignment="Left" Margin="30,10,10,10" Grid.Row="2"/>
-                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4"  Width="40" Height="20" Margin="-5,3,0,0">
-                    <TextBlock Text="{Binding TotalBorrow}" TextAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-            </DockPanel>
+            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <DockPanel  VerticalAlignment="Bottom" Margin="0 0 0 8" Grid.Column="0">
+                    <Label Content="Tổng số lượt mượn:" FontWeight="Bold" Margin="30,10,10,10"/>
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4"  Width="40" Height="20" Margin="-5,3,0,0">
+                        <TextBlock Text="{Binding TotalBorrow}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </DockPanel>
+
+                <DockPanel VerticalAlignment="Bottom" Margin="0 0 0 8" Grid.Column="1">
+                    <Label Content="Số lượng độc giả:" FontWeight="Bold" Margin="50,10,10,10"/>
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4"  Width="40" Height="20" Margin="-5,3,0,0">
+                        <TextBlock Text="{Binding TotalReader}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </DockPanel>
+
+                <DockPanel VerticalAlignment="Bottom" Margin="0 0 0 8" Grid.Column="2">
+                    <Label Content="Số lượng đầu sách:" FontWeight="Bold" Margin="50,10,10,10"/>
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4"  Width="40" Height="20" Margin="-5,3,0,0">
+                        <TextBlock Text="{Binding TotalBook}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </DockPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

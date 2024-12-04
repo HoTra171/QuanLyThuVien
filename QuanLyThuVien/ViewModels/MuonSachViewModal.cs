@@ -3,11 +3,13 @@ using QuanLyThuVien.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using static QuanLyThuVien.ViewModels.DocGiaViewModal;
@@ -81,6 +83,34 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
+        private DateTime _DateBorrowed;
+        public DateTime DateBorrowed
+        {
+            get => _DateBorrowed;
+            set
+            {
+                if (_DateBorrowed != value)
+                {
+                    _DateBorrowed = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private DateTime _DateExpired;
+        public DateTime DateExpired
+        {
+            get => _DateExpired;
+            set
+            {
+                if (_DateExpired != value)
+                {
+                    _DateExpired = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
 
         private Book _selectBookItem;
         public Book SelectBookItem
@@ -98,11 +128,32 @@ namespace QuanLyThuVien.ViewModels
                 }
 
             }
-            
+
+        }
+        
+        private ListBorrowed _SelectBookBorrowItem;
+        public ListBorrowed SelectBookBorrowItem
+        {
+            get => _SelectBookBorrowItem;
+            set
+            {
+                _SelectBookBorrowItem = value;
+                OnPropertyChanged();
+
+                // Cập nhật các thuộc tính khi chọn một dòng
+                if (SelectBookBorrowItem != null)
+                {
+                    BookId = SelectBookBorrowItem.Id;
+                }
+
+            }
+
         }
 
         public ICommand SearchCommand { get; set; }
         public ICommand BooksBorrow { get; set; }
+        public ICommand ReturnBook { get; set; }
+        public ICommand SaveCommand { get; set; }
 
 
 
@@ -128,6 +179,8 @@ namespace QuanLyThuVien.ViewModels
                 LoadReaderData(ReaderId);
             });
 
+            //Thay đổi status
+            UpdateStatus();
 
             BooksBorrow = new RelayCommand<object>((p) =>
             {
@@ -139,21 +192,64 @@ namespace QuanLyThuVien.ViewModels
             },
             (p) => AddListBorrow());
 
+            ReturnBook = new RelayCommand<object>((p) =>
+            {
+
+                if (SelectBookBorrowItem == null)
+                    return false;
+
+                return true;
+            },
+            (p) => ReturnListBook());
+
+
+            SaveCommand = new RelayCommand<object>((p) =>
+            {
+                return true;
+            },
+            (p) => DataProvider.Ins.DB.SaveChanges());
+
+        }
+
+        
+
+
+        
+
+        private void ReturnListBook()
+        {
+            var BookBorrow = DataProvider.Ins.DB.ListBorrowed.Where(x => x.Id == SelectBookBorrowItem.Id).SingleOrDefault();
+
+            if (BookBorrow == null) return;
+
+            // Xóa sách khỏi cơ sở dữ liệu
+            DataProvider.Ins.DB.ListBorrowed.Remove(BookBorrow);
+
+            // Xóa sách khỏi danh sách hiện tại
+            ListBorrowed.Remove(BookBorrow);
+            MessageBox.Show("Trả sách thành công");
 
         }
 
         private void AddListBorrow()
         {
 
-            var book = DataProvider.Ins.DB.Books.Where(p => p.Id == SelectBookItem.Id);
-            var bookBorrow = new ListBorrowed();
-            bookBorrow.IdReader = ReaderId;
-            var a = book;
+            // Lấy ra đối tượng sách từ cơ sở dữ liệu
+            var book = DataProvider.Ins.DB.Books.FirstOrDefault(p => p.Id == SelectBookItem.Id);
 
+            // Thực hiện thao tác thêm sách vào cơ sở dữ liệu hoặc danh sách
+            ListBorrowed newBookBorrow = new ListBorrowed()
+            {
+                IdReader = ReaderId,
+                IdBook = book.Id,
+                DateBorrowed = DateTime.Now,
+                DateExpired = DateTime.Now.AddMonths(1),
+            };
 
-            //ListBorrowed.Add(book);
+            DataProvider.Ins.DB.ListBorrowed.Add(newBookBorrow);
+            ListBorrowed.Add(newBookBorrow);
+            MessageBox.Show("Đã Mượn Sách");
 
-            //}
         }
 
         private void LoadReaderData(int readerId)
@@ -174,5 +270,32 @@ namespace QuanLyThuVien.ViewModels
             // Cập nhật danh sách Books
             ListBook = new ObservableCollection<Book>(filteredBooks);
         }
+
+
+        //cải tiến mỗi khi chạy ứng dụng thì kiểm tra xem ngày trả với ngày hiện tại nếu ngày trả bé hơn ngày hiện tại thì thay đổi status thành cũ
+        private void UpdateStatus()
+        {
+            var BookBorrow = DataProvider.Ins.DB.ListBorrowed;
+            foreach (var item in BookBorrow)
+            {
+                if (item.DateExpired < DateTime.Now)
+                {
+                    if (item.Status != "Cũ") 
+                    {
+                        item.Status = "Cũ";
+                    }
+                }
+                else
+                {
+                    if (item.Status != "Mới") 
+                    {
+                        item.Status = "Mới";
+                    }
+                }
+            }
+
+            DataProvider.Ins.DB.SaveChanges();
+        }
+
     }
 }

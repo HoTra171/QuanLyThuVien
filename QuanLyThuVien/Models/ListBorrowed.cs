@@ -37,7 +37,10 @@ namespace QuanLyThuVien.Models
 
             [Column("STATUS_BORROW")]
             [Required]
-            public bool Status { get; set; }
+            [MaxLength(20)]
+            public string Status { get; set; } = "Mới";  // Giá trị mặc định trong C#
+
+
 
     }
 }

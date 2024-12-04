@@ -88,15 +88,26 @@ namespace QuanLyThuVien.ViewModels
                 OnPropertyChanged();
             }
         }
-        
-        private string _TotalBorrow;
-        public string TotalBorrow
+
+        public int TotalBorrow
         {
-            get { return _TotalBorrow; }
-            set
-            {
-                _TotalBorrow = value;
-                OnPropertyChanged();
+            get {
+                return DataProvider.Ins.DB.ListBorrowed.Select(b => b.Id).Count();
+            }
+        }
+        
+        public int TotalReader
+        {
+            get {
+                 // Tính số lượng Reader duy nhất
+                return DataProvider.Ins.DB.ListBorrowed.Select(b => b.IdReader).Distinct().Count(); 
+            }
+        }
+
+        public int TotalBook
+        {
+            get {
+                return DataProvider.Ins.DB.ListBorrowed.Select(b => b.IdBook).Distinct().Count();
             }
         }
 
@@ -128,18 +139,7 @@ namespace QuanLyThuVien.ViewModels
                 return true;
             },
             p => StatisticsDay());
-
-            // Gọi phương thức để tính tổng số lượt mượn khi ViewModel được khởi tạo
-            CalculateTotalBorrow();
-        }
-        //Tính tổng số lượt mượn
-        private void CalculateTotalBorrow()
-        {
-            // Tính tổng số bản ghi trong bảng ListBorrowed
-            int totalBorrows = DataProvider.Ins.DB.ListBorrowed.Count();
-
-            // Gán giá trị vào thuộc tính TotalBorrow để hiển thị
-            TotalBorrow = totalBorrows.ToString();
+                
         }
 
         private void StatisticsDay()

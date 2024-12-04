@@ -141,7 +141,7 @@
                 </Border>
 
                 <Border CornerRadius="2" Background="Red" Width="140" Height="35" Grid.Row="1">
-                    <Button Background="Transparent" Foreground="White" BorderThickness="0">
+                    <Button Background="Transparent" Foreground="White" BorderThickness="0" Command="{Binding ReturnBook}">
                         <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
                             <Image Source="\icon\MuonSach\trano.png" Width="24"/>
                             <TextBlock Text="Trả sách" Foreground="White" Margin="10,3,0,0"/>
@@ -151,7 +151,7 @@
 
 
                 <Border CornerRadius="2" Background="#00BB9A" Width="140" Height="35" Grid.Row="2">
-                    <Button Background="Transparent" Foreground="White" BorderThickness="0">
+                    <Button Background="Transparent" Foreground="White" BorderThickness="0" Command="{Binding SaveCommand}">
                         <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
                             <Image Source="\icon\MuonSach\luulai.png" Width="24"/>
                             <TextBlock Text="Lưu lại" Foreground="White" Margin="10,3,0,0"/>
@@ -161,6 +161,7 @@
             </Grid>
 
             <DataGrid AutoGenerateColumns="False" Background="#E3F0FF" Grid.Row="1" Margin="20,0,20,10" ItemsSource="{Binding ListBorrowed}"
+                      SelectedItem="{Binding SelectBookBorrowItem, Mode=TwoWay}"
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CanUserResizeRows="False" CanUserReorderColumns="False" IsReadOnly="true">
                 <DataGrid.Effect>
                     <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="0"/>
