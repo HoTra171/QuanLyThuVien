@@ -49,7 +49,7 @@
             </Border>
             <Border CornerRadius="2" Background="Black" Margin="5,5,15,10" Grid.Row="3" Grid.Column="1">
                 <Button x:Name="BtnDoiMatKhau" Content="Đổi mật khẩu" Width="100" Height="35" Padding="0" FontSize="14"
-                Background="Transparent" Foreground="White" BorderThickness="0" Visibility="Collapsed"/>
+                Background="Transparent" Foreground="White" BorderThickness="0" Visibility="Collapsed" Click="BtnDoiMatKhau_Click"/>
             </Border>
 
         </Grid>

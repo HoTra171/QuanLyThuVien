@@ -1,5 +1,6 @@
 ﻿using QuanLyThuVien.Models;
 using QuanLyThuVien.ViewModels;
+using QuanLyThuVien.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -172,6 +173,20 @@ namespace QuanLyThuVien
             if (hi != null)
             {
                 // Đóng cửa sổ cha
+                hi.Close();
+            }
+        }
+
+        private void BtnDoiMatKhau_Click(object sender, RoutedEventArgs e)
+        {
+
+            DoiMatKhau doiMatKhauWindow = new DoiMatKhau();
+            doiMatKhauWindow.Show();
+
+            Window hi = DoiMatKhau.GetWindow(this);
+            if (hi != null)
+            {
+                // Đóng cửa sổ cha (sidebar)
                 hi.Close();
             }
         }
