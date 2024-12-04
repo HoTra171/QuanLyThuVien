@@ -122,7 +122,6 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <Border CornerRadius="2" Background="Blue" Width="140" Height="35" Grid.Row="0">
@@ -143,15 +142,6 @@
                         </Button>
                     </Border>
 
-
-                    <Border CornerRadius="2" Background="#00BB9A" Width="140" Height="35" Grid.Row="2">
-                        <Button Background="Transparent" Foreground="White" BorderThickness="0" Command="{Binding SaveCommand}">
-                            <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
-                                <Image Source="\icon\MuonSach\luulai.png" Width="24"/>
-                                <TextBlock Text="Lưu lại" Foreground="White" Margin="10,3,0,0"/>
-                            </StackPanel>
-                        </Button>
-                    </Border>
                 </Grid>
 
             </Grid>

@@ -141,6 +141,7 @@ namespace QuanLyThuVien.ViewModels
         public ICommand UpdateEmployeeCommand { get; set; }
         public ICommand DeleteEmployeeCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand DestroyCommand { get; set; }
 
         public NhanVienViewModal()
         {
@@ -159,11 +160,6 @@ namespace QuanLyThuVien.ViewModels
                 if (SelectedItem != null)
                     return false;
 
-                // Kiểm tra trùng tên sách
-                var isDuplicate = DataProvider.Ins.DB.AccountUsers.Any(x => x.UserAccount == UserAccount);
-                if (isDuplicate)
-                    return false;
-
                 return true;
             },
             (p) => AddAccountUser());
@@ -174,6 +170,9 @@ namespace QuanLyThuVien.ViewModels
                 if (string.IsNullOrEmpty(UserAccount) || SelectedItem == null)
                     return false;
 
+                if (SelectedItem == null)
+                    return false;
+
                 return true;
             },
             p => UpdateAccountUser());
@@ -181,12 +180,19 @@ namespace QuanLyThuVien.ViewModels
             // Khởi tạo DeleteCommand
             DeleteEmployeeCommand = new RelayCommand<AccountUser>(p =>
             {
-                if (SelectedItem != null)
+                if (SelectedItem == null)
                     return false;
 
                 return true;
             },
             p => DeleteAccountUser());
+
+            
+            DestroyCommand = new RelayCommand<AccountUser>(p =>
+            {
+                return true;
+            },
+            p => ClearFields());
         }
 
         //Phương thức thêm mới sách
@@ -256,6 +262,7 @@ namespace QuanLyThuVien.ViewModels
         //Xóa các trường nhập dữ liệu
         private void ClearFields()
         {
+            SelectedItem = null;
             PasswordText = string.Empty;
             UserAccount = string.Empty;
             PhoneNumber = string.Empty;

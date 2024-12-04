@@ -170,6 +170,7 @@ namespace QuanLyThuVien.ViewModels
         public ICommand DeleteReaderCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand ShowReaderCommand { get; set; }
+        public ICommand distroyCommand { get; set; }
 
 
 
@@ -185,6 +186,9 @@ namespace QuanLyThuVien.ViewModels
             AddReaderCommand = new RelayCommand<object>((p) =>
             {
                 if (string.IsNullOrEmpty(UserNameText))
+                    return false;
+
+                if (SelectedItem != null)
                     return false;
 
                 return true;
@@ -224,6 +228,13 @@ namespace QuanLyThuVien.ViewModels
                 return true;
             },
             p => ShowReader());
+
+
+            distroyCommand = new RelayCommand<Reader>(p =>
+            {
+                return true;
+            },
+            p => ClearFields());
         }
 
         private void ShowReader()
@@ -317,6 +328,7 @@ namespace QuanLyThuVien.ViewModels
         //Xóa các trường nhập dữ liệu
         private void ClearFields()
         {
+            SelectedItem = null;
             UserNameText = string.Empty;
             Address = string.Empty;
             Email = string.Empty;
