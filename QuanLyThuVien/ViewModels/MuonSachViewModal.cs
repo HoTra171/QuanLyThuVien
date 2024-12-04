@@ -1,3 +1,4 @@
+
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using QuanLyThuVien.Models;
 using System;
@@ -13,6 +14,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using static QuanLyThuVien.ViewModels.DocGiaViewModal;
+
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace QuanLyThuVien.ViewModels
@@ -45,7 +47,6 @@ namespace QuanLyThuVien.ViewModels
                 OnPropertyChanged();
             }
         }
-
 
         private string _searchText;
         public string SearchText

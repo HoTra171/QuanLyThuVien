@@ -15,6 +15,7 @@ namespace QuanLyThuVien.Models
     public class Book 
     {
         [Key]
+
         [Column("ID")]
 
         public int Id { get; set; }

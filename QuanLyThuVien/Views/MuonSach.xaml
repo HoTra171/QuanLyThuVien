@@ -8,6 +8,7 @@
         WindowStartupLocation="CenterScreen"
          DataContext="{StaticResource MuonSachVM}" Title="MuonSach" Height="600" Width="1000">
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
@@ -63,7 +64,6 @@
                         <DataGridTextColumn Header="Ngày XB" Binding="{Binding DatePublish}" Width="auto"/>
                         <DataGridTextColumn Header="Ngày Nhập" Binding="{Binding DateImport}" Width="auto"/>
                         <DataGridTextColumn Header="Giá" Binding="{Binding Price}" Width="auto"/>
-
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -77,12 +77,10 @@
 
                 <!--Nhập thông tin độc giả -->
                 <Grid VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" DataContext="{StaticResource DocGiaVM}" Background="#E3F0FF">
-                   
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -155,6 +153,7 @@
                         </Button>
                     </Border>
                 </Grid>
+
             </Grid>
 
             

@@ -8,4 +8,5 @@
     <viewmodel:BaoCaoViewModal x:Key="BaoCaoVM" />
     <viewmodel:MuonSachViewModal x:Key="MuonSachVM" />
     <viewmodel:DoiMatKhauViewModel x:Key="DoiMatKhauVM" />
+
 </ResourceDictionary>

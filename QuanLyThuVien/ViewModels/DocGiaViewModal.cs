@@ -1,3 +1,4 @@
+
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Identity.Client;
 using QuanLyThuVien.Models;
@@ -106,7 +107,6 @@ namespace QuanLyThuVien.ViewModels
                 OnPropertyChanged();
             }
         }
-
 
         private string _ReaderType;
         public string ReaderType
@@ -249,8 +249,10 @@ namespace QuanLyThuVien.ViewModels
                 Reader.Clear(); // Xóa dữ liệu cũ trong danh sách
                 Reader.Add(reader); // Thêm đối tượng `reader` vào danh sách
 
+
                 // Gửi tin nhắn chứa Id
                 WeakReferenceMessenger.Default.Send(new ReaderIdMessage(reader.Id));
+
             }
 
         }
@@ -261,6 +263,7 @@ namespace QuanLyThuVien.ViewModels
         {
             // Kiểm tra nếu tất cả thông tin đã hợp lệ
             if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) ||
+
                 string.IsNullOrWhiteSpace(ReaderType) || string.IsNullOrWhiteSpace(Email) || !Dob.HasValue || !DateCreated.HasValue)
             {
                 // Hiển thị thông báo lỗi (có thể dùng MessageBox hoặc Notification)
@@ -295,6 +298,7 @@ namespace QuanLyThuVien.ViewModels
             var reader = DataProvider.Ins.DB.Readers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
             // Kiểm tra nếu tất cả thông tin đã hợp lệ
             if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) ||
+
                 string.IsNullOrWhiteSpace(ReaderType) || string.IsNullOrWhiteSpace(Email) || !Dob.HasValue || !DateCreated.HasValue)
             {
                 // Hiển thị thông báo lỗi (có thể dùng MessageBox hoặc Notification)

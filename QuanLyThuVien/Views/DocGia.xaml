@@ -151,6 +151,13 @@
                             <TextBlock Text="Thêm mới" Margin="5,5,10,5"/>
                         </StackPanel>
                     </Button>
+                    
+                    <Button Background="#777" BorderThickness="0" VerticalAlignment="Center" Padding="0" Width="150" Height="35" FontWeight="Bold" Grid.Row="3" Grid.Column="1"
+                            Command="{Binding ShowReaderCommand}" Click="ButtonDetail_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Xem Chi Tiết Độc Giả" Margin="5,5,10,5"/>
+                        </StackPanel>
+                    </Button>
 
                     <Button Background="#777" BorderThickness="0" VerticalAlignment="Center" Padding="0" Width="150" Height="35" FontWeight="Bold" Grid.Row="3" Grid.Column="1"
                             Command="{Binding ShowReaderCommand}" Click="ButtonDetail_Click">
