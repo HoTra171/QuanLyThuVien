@@ -1,4 +1,4 @@
-﻿using QuanLyThuVien.Models;
+using QuanLyThuVien.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -181,7 +181,7 @@ namespace QuanLyThuVien.ViewModels
             // Khởi tạo DeleteCommand
             DeleteEmployeeCommand = new RelayCommand<AccountUser>(p =>
             {
-                if (SelectedItem == null)
+                if (SelectedItem != null)
                     return false;
 
                 return true;
