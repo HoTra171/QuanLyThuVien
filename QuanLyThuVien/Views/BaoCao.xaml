@@ -114,6 +114,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <DockPanel  VerticalAlignment="Bottom" Margin="0 0 0 8" Grid.Column="0">
                     <Label Content="Tổng số lượt mượn:" FontWeight="Bold" Margin="30,10,10,10"/>
@@ -135,6 +136,10 @@
                         <TextBlock Text="{Binding TotalBook}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </DockPanel>
+
+                <Border CornerRadius="2" Background="#48608E" Width="150" Height="35" Margin="0,0,10,0" Grid.Column="3">
+                    <Button Content="Tổng sách mượn" BorderThickness="0" Background="Transparent" FontWeight="Bold" Command="{Binding StatisticsCommand}"/>
+                </Border>
             </Grid>
         </Grid>
     </Grid>

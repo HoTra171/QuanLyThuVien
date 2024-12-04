@@ -23,8 +23,10 @@ namespace QuanLyThuVien.ViewModels
                 OnPropertyChanged();
             }
         }
+        private ObservableCollection<ListBorrowed> _allList;
 
         public ObservableCollection<ListBorrowed> FilteredListMonth { get; set; } = new ObservableCollection<ListBorrowed>();
+
 
         public ObservableCollection<ListBorrowed> _ListDay;
         public ObservableCollection<ListBorrowed> ListDay
@@ -114,11 +116,13 @@ namespace QuanLyThuVien.ViewModels
         // Các lệnh cho chức năng Thêm, Cập nhật, Xóa và Tải sách
         public ICommand StatisticsDayCommand { get; set; }
         public ICommand StatisticsMonthCommand { get; set; }
+        public ICommand StatisticsCommand { get; set; }
 
         public BaoCaoViewModal()
         {
-            ListDay = new ObservableCollection<ListBorrowed>(DataProvider.Ins.DB.ListBorrowed); 
-            ListMonth = new ObservableCollection<ListBorrowed>(DataProvider.Ins.DB.ListBorrowed);
+            _allList = new ObservableCollection<ListBorrowed>(DataProvider.Ins.DB.ListBorrowed);
+            ListMonth = new ObservableCollection<ListBorrowed>(_allList);
+            ListDay = new ObservableCollection<ListBorrowed>(_allList);
 
             Month = new ObservableCollection<string> { "1", "2", "3", "4", "5", "6", "7", "8","9", "10","11","12"};
             // Định nghĩa các lệnh
@@ -139,13 +143,25 @@ namespace QuanLyThuVien.ViewModels
                 return true;
             },
             p => StatisticsDay());
+
+            //Báo cáo theo tháng
+            StatisticsCommand = new RelayCommand<object>(p =>
+            {
+                return true;
+            },
+            p => {
+                ListDay = _allList;
+                ListMonth = _allList;
+            });
                 
         }
+
+
 
         private void StatisticsDay()
         {
             // Kiểm tra nếu SelectedDate không null
-            if (SelectedDate.HasValue)
+            if (SelectedDate.Value.Day > 0 && SelectedDate.Value.Day <= 31 && SelectedDate.Value.Month > 0 && SelectedDate.Value.Month <= 12)
             {
                 // Lấy ngày, tháng, năm từ SelectedDate
                 var selectedDay = SelectedDate.Value.Day;
