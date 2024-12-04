@@ -1,4 +1,6 @@
-﻿using Microsoft.Identity.Client;
+
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Identity.Client;
 using QuanLyThuVien.Models;
 using System;
 using System.Collections.Generic;
@@ -106,7 +108,6 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
-     
         private string _ReaderType;
         public string ReaderType
         {
@@ -151,6 +152,17 @@ namespace QuanLyThuVien.ViewModels
                 FilterReaders();
             }
         }
+
+        public class ReaderIdMessage
+        {
+            public int ReaderId { get; set; }
+
+            public ReaderIdMessage(int readerId)
+            {
+                ReaderId = readerId;
+            }
+        }
+
 
         // Các lệnh cho chức năng Thêm, Cập nhật, Xóa và Tải sách
         public ICommand AddReaderCommand { get; set; }
@@ -236,15 +248,22 @@ namespace QuanLyThuVien.ViewModels
             {
                 Reader.Clear(); // Xóa dữ liệu cũ trong danh sách
                 Reader.Add(reader); // Thêm đối tượng `reader` vào danh sách
+
+
+                // Gửi tin nhắn chứa Id
+                WeakReferenceMessenger.Default.Send(new ReaderIdMessage(reader.Id));
+
             }
 
         }
+
 
         //Phương thức thêm mới sách
         private void AddReader()
         {
             // Kiểm tra nếu tất cả thông tin đã hợp lệ
-            if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) || 
+            if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) ||
+
                 string.IsNullOrWhiteSpace(ReaderType) || string.IsNullOrWhiteSpace(Email) || !Dob.HasValue || !DateCreated.HasValue)
             {
                 // Hiển thị thông báo lỗi (có thể dùng MessageBox hoặc Notification)
@@ -261,7 +280,7 @@ namespace QuanLyThuVien.ViewModels
                 ReaderType = ReaderType,
                 Dob = Dob,
                 DateCreated = DateCreated,
-        };
+            };
 
             DataProvider.Ins.DB.Readers.Add(newReader);
             DataProvider.Ins.DB.SaveChanges();
@@ -278,7 +297,8 @@ namespace QuanLyThuVien.ViewModels
         {
             var reader = DataProvider.Ins.DB.Readers.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
             // Kiểm tra nếu tất cả thông tin đã hợp lệ
-            if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address)||
+            if (string.IsNullOrWhiteSpace(UserNameText) || string.IsNullOrWhiteSpace(Address) ||
+
                 string.IsNullOrWhiteSpace(ReaderType) || string.IsNullOrWhiteSpace(Email) || !Dob.HasValue || !DateCreated.HasValue)
             {
                 // Hiển thị thông báo lỗi (có thể dùng MessageBox hoặc Notification)
@@ -306,7 +326,7 @@ namespace QuanLyThuVien.ViewModels
         private void ClearFields()
         {
             UserNameText = string.Empty;
-            Address = string.Empty; 
+            Address = string.Empty;
             Email = string.Empty;
             ReaderType = string.Empty;
             Dob = null;

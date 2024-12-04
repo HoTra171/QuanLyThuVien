@@ -49,7 +49,6 @@ namespace QuanLyThuVien.ViewModels
                     DatePublish = SelectedItem.DatePublish;
                     DateImport = SelectedItem.DateImport;
                     Price = SelectedItem.Price ?? 0m; // Nếu Price là null, gán giá trị 0
-
                 }
             }
         }

@@ -11,6 +11,7 @@ namespace QuanLyThuVien.ViewModels
 {
     public class DangNhapViewModel : BaseViewModel
     {
+        public static int Id { get; set; }
         public static bool Role { get; set; }
 
         public ICommand LoadDangNhapCommand { get; set; }
@@ -54,9 +55,10 @@ namespace QuanLyThuVien.ViewModels
                     var user = DataProvider.Ins.DB.AccountUsers
                                 .FirstOrDefault(x => x.UserNameText == UserName && x.PasswordText == passEncode);
 
-                    Role = user.Role;
                     if (user != null)
                     {
+                        Id = user.Id;
+                        Role = user.Role;
                         loginWindow.Hide(); // Ẩn cửa sổ đăng nhập
                         mainWindow.ShowDialog(); // Hiển thị cửa sổ chính
                         loginWindow.Close(); // Đóng cửa sổ đăng nhập
