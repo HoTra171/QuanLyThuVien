@@ -149,6 +149,7 @@ namespace QuanLyThuVien.ViewModels
         public ICommand DeleteBookCommand { get; set; }
         public ICommand LoadBooksCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand distroyCommand { get; set; }
 
         public BookViewModel()
         {
@@ -167,11 +168,6 @@ namespace QuanLyThuVien.ViewModels
                 if (SelectedItem != null)
                     return false;
 
-                // Kiểm tra trùng tên sách
-                var isDuplicate = DataProvider.Ins.DB.Books.Any(x => x.BookName == BookName);
-                if (isDuplicate)
-                    return false;
-
                 return true;
             },
             (p) => AddBook());
@@ -180,6 +176,9 @@ namespace QuanLyThuVien.ViewModels
             UpdateBookCommand = new RelayCommand<object>(p =>
             {
             if (string.IsNullOrEmpty(BookName) || SelectedItem == null)
+                    return false;
+
+                if (SelectedItem == null)
                     return false;
 
                 return true;
@@ -195,6 +194,12 @@ namespace QuanLyThuVien.ViewModels
                 return true;
             },
             p => DeleteBook());
+
+            distroyCommand = new RelayCommand<Book>(p =>
+            {
+                return true;
+            },
+            p => ClearFields());
         }
 
         //Phương thức thêm mới sách
@@ -285,6 +290,7 @@ namespace QuanLyThuVien.ViewModels
         //Xóa các trường nhập dữ liệu
         private void ClearFields()
         {
+            SelectedItem = null;
             BookName = string.Empty;
             Category = string.Empty;
             Author = string.Empty;
