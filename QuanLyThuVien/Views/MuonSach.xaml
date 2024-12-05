@@ -110,18 +110,59 @@
                     <TextBlock Text="Ngày Sinh:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="4" FontWeight="Bold"/>
                     <TextBlock Text="{Binding Dob}" Grid.Column="1" Grid.Row="4" Margin="0,10,10,10"/>
 
+<<<<<<< Updated upstream
                     <TextBlock Text="Ngày Lập Thẻ:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="5" FontWeight="Bold"/>
                     <TextBlock Text="{Binding DateCreated}" Grid.Column="1" Grid.Row="5" Margin="0,10,10,10"/>
+=======
+                    <TextBlock Text="Ngày Lập Thẻ:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="6" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding DateCreated}" Grid.Column="1" Grid.Row="6" Margin="0,10,10,10"/>
+
+                    <TextBlock Text="Loại Đọc Giả:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="8" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding ReaderType}" Grid.Column="1" Grid.Row="8" Margin="0,10,10,10"/>
+                </Grid>
+>>>>>>> Stashed changes
 
                     <TextBlock Text="Debt:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="6" FontWeight="Bold"/>
                     <TextBlock Text="{Binding Debt}" Grid.Column="1" Grid.Row="6" Margin="0,10,10,10"/>
 
+<<<<<<< Updated upstream
                     <TextBlock Text="Loại Đọc Giả:" Margin="10,10,0,10" Grid.Column="0" Grid.Row="7" FontWeight="Bold"/>
                     <TextBlock Text="{Binding ReaderType}" Grid.Column="1" Grid.Row="7" Margin="0,10,10,10"/>
+=======
+                <!--các button-->
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border CornerRadius="2" Background="Blue" Width="140" Height="35" Grid.Row="0">
+                        <Button Background="Transparent" Foreground="White" BorderThickness="0" Command="{Binding BooksBorrow}">
+                            <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
+                                <Image Source="\icon\MuonSach\no.png" Width="24"/>
+                                <TextBlock Text="Mượn sách" Foreground="White" Margin="10,3,0,0"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+
+                    <Border CornerRadius="2" Background="Red" Width="140" Height="35" Grid.Row="1">
+                        <Button Background="Transparent" Foreground="White" BorderThickness="0" Command="{Binding ReturnBook}">
+                            <StackPanel Orientation="Horizontal" Margin="-10,0,0,0">
+                                <Image Source="\icon\MuonSach\trano.png" Width="24"/>
+                                <TextBlock Text="Trả sách" Foreground="White" Margin="10,3,0,0"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+
+
+
+>>>>>>> Stashed changes
                 </Grid>
 
             </Grid>
 
+<<<<<<< Updated upstream
             <!--các button-->
             <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -130,6 +171,9 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
               
+=======
+
+>>>>>>> Stashed changes
 
                
 

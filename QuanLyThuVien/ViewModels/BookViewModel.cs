@@ -165,13 +165,9 @@ namespace QuanLyThuVien.ViewModels
                 if (string.IsNullOrEmpty(BookName))
                     return false;
 
-                if (SelectedItem != null)
+                if (SelectedItem == null)
                     return false;
 
-                // Kiểm tra trùng tên sách
-                var isDuplicate = DataProvider.Ins.DB.Books.Any(x => x.BookName == BookName);
-                if (isDuplicate)
-                    return false;
 
                 return true;
             },
