@@ -28,7 +28,7 @@ namespace QuanLyThuVien
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MuonSach muon = new MuonSach();
+            DocGia muon = new DocGia();
             muon.Show();
 
             Window hi = MuonSach.GetWindow(this);

@@ -87,7 +87,6 @@
 
         <!-- Nút chức năng -->
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20" Grid.Row="1" Grid.Column="2">
-            
             <Button Background="#FFCAAA2E" BorderThickness="0" Width="150" Height="50" Margin="0,0,0,0" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Left"
                     Click="Button_Click">
                 <StackPanel Orientation="Horizontal">
@@ -101,14 +100,6 @@
                 <StackPanel Orientation="Horizontal" >
                     <Image Source="\icon\QuanLyThuVien\trasach.png" Width="24"/>
                     <TextBlock Text="Trả sách" Foreground="White" Margin="10,2,0,0"/>
-                </StackPanel>
-            </Button>
-
-            <Button Background="#FFB71C1C" BorderThickness="0" Width="150" Height="50" Margin="0,50,0,0" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Left"
-                    Click="Button_Click">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="\icon\QuanLyThuVien\thutienphat.png" Width="24"/>
-                    <TextBlock Text="Thu tiền phạt" Foreground="White" Margin="5,2,0,0"/>
                 </StackPanel>
             </Button>
         </StackPanel>
