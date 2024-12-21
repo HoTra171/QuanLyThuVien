@@ -115,23 +115,24 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <DockPanel  VerticalAlignment="Bottom" Margin="0 0 0 8" Grid.Column="0">
-                    <Label Content="Tổng số lượt mượn:" FontWeight="Bold" Margin="30,10,10,10"/>
+                    <Label Content="Tổng số lượt mượn:" FontWeight="Bold" Margin="20,10,10,10"/>
                     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4"  Width="40" Height="20" Margin="-5,3,0,0">
                         <TextBlock Text="{Binding TotalBorrow}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </DockPanel>
 
                 <DockPanel VerticalAlignment="Bottom" Margin="0 0 0 8" Grid.Column="1">
-                    <Label Content="Số lượng độc giả:" FontWeight="Bold" Margin="50,10,10,10"/>
+                    <Label Content="Số lượng độc giả:" FontWeight="Bold" Margin="20,10,10,10"/>
                     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4"  Width="40" Height="20" Margin="-5,3,0,0">
                         <TextBlock Text="{Binding TotalReader}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </DockPanel>
 
                 <DockPanel VerticalAlignment="Bottom" Margin="0 0 0 8" Grid.Column="2">
-                    <Label Content="Số lượng đầu sách:" FontWeight="Bold" Margin="50,10,10,10"/>
+                    <Label Content="Số lượng đầu sách:" FontWeight="Bold" Margin="20,10,10,10"/>
                     <Border BorderBrush="Black" BorderThickness="1" CornerRadius="4"  Width="40" Height="20" Margin="-5,3,0,0">
                         <TextBlock Text="{Binding TotalBook}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
@@ -139,6 +140,10 @@
 
                 <Border CornerRadius="2" Background="#48608E" Width="150" Height="35" Margin="0,0,10,0" Grid.Column="3">
                     <Button Content="Tổng sách mượn" BorderThickness="0" Background="Transparent" FontWeight="Bold" Command="{Binding StatisticsCommand}"/>
+                </Border>
+                
+                <Border CornerRadius="2" Background="#48608E" Width="100" Height="35" Margin="0,0,10,0" Grid.Column="4">
+                    <Button Content="Biểu đồ" BorderThickness="0" Background="Transparent" FontWeight="Bold" Click="Button_Click"/>
                 </Border>
             </Grid>
         </Grid>

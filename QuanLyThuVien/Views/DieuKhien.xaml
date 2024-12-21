@@ -102,6 +102,14 @@
                     <TextBlock Text="Trả sách" Foreground="White" Margin="10,2,0,0"/>
                 </StackPanel>
             </Button>
+
+            <Button Background="#E5001F" BorderThickness="0" Width="150" Height="50" Padding="15,0,0,0" Margin="0,50,0,0" Foreground="White" FontWeight="Bold" HorizontalContentAlignment="Left"
+                    Click="Button_Click">
+                <StackPanel Orientation="Horizontal" >
+                    <Image Source="\icon\QuanLyThuVien\thutienphat.png" Width="24"/>
+                    <TextBlock Text="Thu tiền phạt" Foreground="White" Margin="10,2,0,0"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

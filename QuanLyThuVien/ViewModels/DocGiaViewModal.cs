@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static QuanLyThuVien.ViewModels.MuonSachViewModal;
 
 namespace QuanLyThuVien.ViewModels
 {
@@ -153,6 +154,18 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
+        //chưa làm 
+        private decimal? _debt;
+        public decimal? debt
+        {
+            get => _debt ;
+            set
+            {
+                _debt = value;
+                OnPropertyChanged();
+            }
+        }
+
         public class ReaderIdMessage
         {
             public int ReaderId { get; set; }
@@ -176,9 +189,13 @@ namespace QuanLyThuVien.ViewModels
 
         public DocGiaViewModal()
         {
+            // Tính tổng số tiền nợ 
+            sumDebtReader();
+
             // Lưu dữ liệu ban đầu vào danh sách tạm
             _allList = new ObservableCollection<Reader>(DataProvider.Ins.DB.Readers);
             List = new ObservableCollection<Reader>(_allList); // Hiển thị ban đầu là toàn bộ sách
+
 
             SearchCommand = new RelayCommand<string>(p => true, p => FilterReaders());
 
@@ -237,6 +254,43 @@ namespace QuanLyThuVien.ViewModels
             p => ClearFields());
         }
 
+        // tính tổng số nợ của các độc giả
+        private void sumDebtReader()
+        {
+            // Lấy tổng nợ của các độc giả và lưu kết quả vào bộ nhớ
+            var totalDebts = (from borrow in DataProvider.Ins.DB.ListBorrowed
+                              group borrow by borrow.IdReader into g
+                              select new
+                              {
+                                  idReader = g.Key,
+                                  TotalDebt = g.Sum(b => b.debtBook)
+                              }).ToList();  // Đảm bảo truy vấn được thực thi và kết quả được lưu vào bộ nhớ
+
+            // Cập nhật các độc giả với tổng nợ
+            foreach (var debt in totalDebts)
+            {
+                // Tìm độc giả tương ứng
+                var reader = DataProvider.Ins.DB.Readers.FirstOrDefault(r => r.Id == debt.idReader);
+                if (reader != null)
+                {
+                    // Cập nhật số nợ của độc giả
+                    reader.debt = debt.TotalDebt;
+                }
+            }
+
+            try
+            {
+                // Lưu tất cả thay đổi vào cơ sở dữ liệu sau khi cập nhật tất cả
+                DataProvider.Ins.DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi nếu có
+                Console.WriteLine($"Lỗi khi lưu dữ liệu: {ex.Message}");
+            }
+        }
+
+
         private void ShowReader()
         {
             // Giả sử `reader` là một đối tượng kiểu `Reader`
@@ -249,9 +303,10 @@ namespace QuanLyThuVien.ViewModels
 
             if (reader != null)
             {
+                debt = reader.debt;
+
                 Reader.Clear(); // Xóa dữ liệu cũ trong danh sách
                 Reader.Add(reader); // Thêm đối tượng `reader` vào danh sách
-
 
                 // Gửi tin nhắn chứa Id
                 WeakReferenceMessenger.Default.Send(new ReaderIdMessage(reader.Id));
@@ -259,7 +314,6 @@ namespace QuanLyThuVien.ViewModels
             }
 
         }
-
 
         //Phương thức thêm mới sách
         private void AddReader()

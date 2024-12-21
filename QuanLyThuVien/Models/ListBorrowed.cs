@@ -41,6 +41,10 @@ namespace QuanLyThuVien.Models
             [MaxLength(20)]
             public string Status { get; set; } = "Mới";  // Giá trị mặc định trong C#
 
+            [Column("DEBT_BOOK")]
+            [Required]
+            public decimal? debtBook { get; set; }
+
 
 
     }

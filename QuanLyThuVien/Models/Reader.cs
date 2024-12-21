@@ -50,6 +50,10 @@ namespace QuanLyThuVien.Models
         [MaxLength(255)]
         public string? ReaderType { get; set; }
 
+        [Column("DEBT")]
+        [Required]
+        public decimal? debt { get; set; }
+
         public ICollection<ListBorrowed> ListBorrowed { get; set; }
 
     }

@@ -1,5 +1,4 @@
-﻿using QuanLyThuVien.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,22 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace QuanLyThuVien
+namespace QuanLyThuVien.Views
 {
     /// <summary>
-    /// Interaction logic for BaoCaoThongKe.xaml
+    /// Interaction logic for BaoCaoChart.xaml
     /// </summary>
-    public partial class BaoCao : Window
+    public partial class BaoCaoChart : Window
     {
-        public BaoCao()
+        public BaoCaoChart()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            BaoCaoChart chart = new BaoCaoChart();
-            chart.Show();
         }
     }
 }
