@@ -64,6 +64,7 @@
                         <DataGridTextColumn Header="Ngày Lập Thẻ" Binding="{Binding DateCreated}" Width="auto"/>
                         <DataGridTextColumn Header="Ngày Lập Thẻ" Binding="{Binding Debt}" Width="auto"/>
                         <DataGridTextColumn Header="Ngày Lập Thẻ" Binding="{Binding ReaderType}" Width="auto"/>
+                        <DataGridTextColumn Header="Số tiền nợ" Binding="{Binding debt}" Width="auto"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

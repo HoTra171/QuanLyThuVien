@@ -47,7 +47,7 @@ namespace QuanLyThuVien.Models
                 .HasOne(lb => lb.Book)
                 .WithMany(b => b.ListBorrowed)
                 .HasForeignKey(lb => lb.IdBook)
-                .OnDelete(DeleteBehavior.SetNull); // Set NULL khi Book bị xóa
+                .OnDelete(DeleteBehavior.Cascade); // Set NULL khi Book bị xóa
         }
     }
 }

@@ -1,7 +1,12 @@
-﻿using QuanLyThuVien.Models;
+﻿using LiveCharts;
+using LiveCharts.Definitions.Charts;
+using LiveCharts.Wpf;
+using LiveCharts.Wpf.Charts.Base;
+using QuanLyThuVien.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +54,7 @@ namespace QuanLyThuVien.ViewModels
                 OnPropertyChanged(); // Giúp cập nhật UI khi thay đổi
             }
         }
+
         private string _SelectedYear;
         public string SelectedYear
         {
@@ -56,6 +62,17 @@ namespace QuanLyThuVien.ViewModels
             set
             {
                 _SelectedYear = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        private string _SelectedYearChart;
+        public string SelectedYearChart
+        {
+            get { return _SelectedYearChart; }
+            set
+            {
+                _SelectedYearChart = value;
                 OnPropertyChanged();
             }
         }
@@ -91,6 +108,7 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
+        // số lượt mượn sách
         public int TotalBorrow
         {
             get {
@@ -98,6 +116,7 @@ namespace QuanLyThuVien.ViewModels
             }
         }
         
+        // số đầu độc giả mượn sách
         public int TotalReader
         {
             get {
@@ -106,6 +125,7 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
+        // tính tổng số đầu sách đã mượn
         public int TotalBook
         {
             get {
@@ -113,9 +133,38 @@ namespace QuanLyThuVien.ViewModels
             }
         }
 
+        // làm biểu đồ thống kê
+        private SeriesCollection _SeriesCollection;
+        public SeriesCollection SeriesCollection
+        {
+            get => _SeriesCollection;
+            set
+            {
+                _SeriesCollection = value;
+                OnPropertyChanged(nameof(SeriesCollection));
+            }
+        }
+
+
+        private ObservableCollection<string> _Labels;
+        public ObservableCollection<string> Labels
+        {
+            get => _Labels;
+            set
+            {
+                _Labels = value;
+                OnPropertyChanged(nameof(Labels));
+            }
+        }
+
+
+        public Func<double, string> Formatter { get; set; }
+
+
         // Các lệnh cho chức năng Thêm, Cập nhật, Xóa và Tải sách
         public ICommand StatisticsDayCommand { get; set; }
         public ICommand StatisticsMonthCommand { get; set; }
+        public ICommand StatisticsYearCommand { get; set; }
         public ICommand StatisticsCommand { get; set; }
 
         public BaoCaoViewModal()
@@ -125,6 +174,8 @@ namespace QuanLyThuVien.ViewModels
             ListDay = new ObservableCollection<ListBorrowed>(_allList);
 
             Month = new ObservableCollection<string> { "1", "2", "3", "4", "5", "6", "7", "8","9", "10","11","12"};
+
+
             // Định nghĩa các lệnh
             //Báo cáo theo ngày
             StatisticsMonthCommand = new RelayCommand<object>((p) =>
@@ -144,6 +195,13 @@ namespace QuanLyThuVien.ViewModels
             },
             p => StatisticsDay());
 
+            //Báo cáo theo năm trong phần biểu đồ
+            StatisticsYearCommand = new RelayCommand<object>(p =>
+            {
+                return true;
+            },
+            p => LoadChartData());
+
             //Báo cáo theo tháng
             StatisticsCommand = new RelayCommand<object>(p =>
             {
@@ -155,6 +213,77 @@ namespace QuanLyThuVien.ViewModels
             });
                 
         }
+
+        // hàm biểu đồ
+        private void LoadChartData()
+        {
+            // Kiểm tra nếu SelectedYearChart không rỗng và có thể chuyển đổi thành số nguyên
+            if (int.TryParse(SelectedYearChart, out int year))
+            {
+                // Lấy danh sách số sách được mượn theo từng tháng trong năm đã chọn
+                var monthlyBorrowData = DataProvider.Ins.DB.ListBorrowed
+                    .Where(borrow => borrow.DateBorrowed.Year == year)
+                    .GroupBy(borrow => borrow.DateBorrowed.Month) // Nhóm theo tháng
+                    .Select(group => new
+                    {
+                        Month = group.Key,
+                        BorrowCount = group.Count(), // Đếm số lượt mượn trong từng tháng
+                        UniqueReaderCount = group.Select(borrow => borrow.IdReader).Distinct().Count(), // Đếm số lượng độc giả duy nhất
+                        UniqueBookCount = group.Select(borrow => borrow.IdBook).Distinct().Count() // Đếm số ID sách duy nhất
+                    })
+                    .OrderBy(result => result.Month) // Sắp xếp theo tháng
+                    .ToList();
+
+                // Khởi tạo danh sách nhãn (Labels) cho biểu đồ
+                Labels = new ObservableCollection<string>();
+                ChartValues<int> borrowCounts = new ChartValues<int>();
+                ChartValues<int> readerCounts = new ChartValues<int>();
+                ChartValues<int> bookCounts = new ChartValues<int>();
+
+                // Duyệt qua kết quả để gán dữ liệu cho biểu đồ
+                for (int month = 1; month <= 12; month++)
+                {
+                    // Tìm dữ liệu của tháng hiện tại
+                    Labels.Add($"Tháng {month}");
+                    var data = monthlyBorrowData.FirstOrDefault(x => x.Month == month);
+
+                    // Nếu có dữ liệu cho tháng đó, thêm vào các danh sách, nếu không thì thêm 0
+                    borrowCounts.Add(data != null ? data.BorrowCount : 0);
+                    readerCounts.Add(data != null ? data.UniqueReaderCount : 0);
+                    bookCounts.Add(data != null ? data.UniqueBookCount : 0);
+                }
+
+                // Gán dữ liệu vào SeriesCollection
+                SeriesCollection = new SeriesCollection
+                {
+                    new ColumnSeries
+                    {
+                        Title = "Số lượt mượn",
+                        Values = borrowCounts,
+                    },
+                    new ColumnSeries
+                    {
+                        Title = "Số lượng độc giả",
+                        Values = readerCounts,
+                    },
+                    new ColumnSeries
+                    {
+                        Title = "Số đầu sách",
+                        Values = bookCounts
+                    },
+                };
+
+
+                // Định dạng trục y (nếu cần)
+                Formatter = value => value.ToString("N0");
+            }
+            else
+            {
+                // Nếu SelectedYearChart không hợp lệ, hiển thị thông báo lỗi
+                MessageBox.Show("Vui lòng chọn một năm hợp lệ.");
+            }
+        }
+
 
 
 

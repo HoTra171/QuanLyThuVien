@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.EntityFrameworkCore;
 using QuanLyThuVien.Models;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,13 @@ namespace QuanLyThuVien.ViewModels
             set
             {
                 _ListBorrowed = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(ListBorrowed));
+
+                // tính số tiền sách đã bị nợ 
+                CountDebtBook();
+
+                //Thay đổi status
+                UpdateStatus();
             }
         }
 
@@ -81,6 +88,12 @@ namespace QuanLyThuVien.ViewModels
                 _BookId = value;
                 OnPropertyChanged();
             }
+        }
+        
+        private decimal? _debtBook;
+        public decimal? debtBook
+        {
+            get => _debtBook;
         }
 
         private DateTime _DateBorrowed;
@@ -153,12 +166,14 @@ namespace QuanLyThuVien.ViewModels
         public ICommand SearchCommand { get; set; }
         public ICommand BooksBorrow { get; set; }
         public ICommand ReturnBook { get; set; }
+        public ICommand RepayDebt { get; set; }
         public ICommand distroyCommand { get; set; }
 
 
         public MuonSachViewModal()
         {
-            ListBorrowed = new ObservableCollection<ListBorrowed>(DataProvider.Ins.DB.ListBorrowed); // Hiển thị ban đầu là toàn bộ sách
+            _allListBorrowd = new ObservableCollection<ListBorrowed>(DataProvider.Ins.DB.ListBorrowed); // Hiển thị ban đầu là toàn bộ sách
+            ListBorrowed = new ObservableCollection<ListBorrowed>(_allListBorrowd); // Hiển thị ban đầu là toàn bộ sách
 
 
             // Lưu dữ liệu ban đầu vào danh sách tạm
@@ -167,7 +182,6 @@ namespace QuanLyThuVien.ViewModels
 
             SearchCommand = new RelayCommand<string>(p => true, p => FilterBooks());
 
-
             // Đăng ký nhận tin nhắn
             WeakReferenceMessenger.Default.Register<ReaderIdMessage>(this, (r, message) =>
             {
@@ -175,10 +189,8 @@ namespace QuanLyThuVien.ViewModels
 
                 // Tải dữ liệu dựa trên ReaderId nếu cần
                 LoadReaderData(ReaderId);
-            });
 
-            //Thay đổi status
-            UpdateStatus();
+            });
 
             BooksBorrow = new RelayCommand<object>((p) =>
             {
@@ -200,6 +212,16 @@ namespace QuanLyThuVien.ViewModels
             },
             (p) => ReturnListBook());
 
+            RepayDebt = new RelayCommand<object>((p) =>
+            {
+
+                if (SelectBookBorrowItem == null)
+                    return false;
+
+                return true;
+            },
+            (p) => RepayDebtBook());
+
             distroyCommand = new RelayCommand<object>((p) =>
             {
                 return true;
@@ -210,30 +232,87 @@ namespace QuanLyThuVien.ViewModels
                 SelectBookItem = null;
             });
 
-
         }
 
-        private void ReturnListBook()
+        // hàm trả nợ sách 
+        private void RepayDebtBook()
         {
-
             var BookBorrow = DataProvider.Ins.DB.ListBorrowed.Where(x => x.Id == SelectBookBorrowItem.Id).SingleOrDefault();
 
             if (BookBorrow == null) return;
             if (ReaderId > 0)
             {
-                // Xóa sách khỏi cơ sở dữ liệu
-                DataProvider.Ins.DB.ListBorrowed.Remove(BookBorrow);
-                DataProvider.Ins.DB.SaveChanges();
-                // Xóa sách khỏi danh sách hiện tại
-                ListBorrowed.Remove(BookBorrow);
-                MessageBox.Show("Trả sách thành công");
+                if (BookBorrow.debtBook < 0)
+                {
+                    MessageBox.Show("Không có nợ", "Thông báo lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                else
+                {
+                    BookBorrow.debtBook = 0;
+                    BookBorrow.DateExpired = DateTime.Now;
+                    BookBorrow.Status = "Mới";
+                    DataProvider.Ins.DB.SaveChanges();
+                    ListBorrowed = new ObservableCollection<ListBorrowed>(DataProvider.Ins.DB.ListBorrowed);
+                    MessageBox.Show("Trả nợ thành công");
+                }
             }
             else
             {
                 MessageBox.Show("Vui lòng chọn độc giả trước");
 
             }
+        }
 
+        // hàm tính số tiền nợ của mỗi sách đã cũ
+        private void CountDebtBook()
+        {
+            var BookBorrow = DataProvider.Ins.DB.ListBorrowed;
+            foreach (var item in BookBorrow)
+            {
+                if (item.Status != "Cũ")
+                {
+                    item.debtBook = 0;
+                }
+                else
+                {
+                    // mỗi người muộn thì tăng thêm 3000 đồng
+                    item.debtBook = (DateTime.Now.Date - item.DateExpired.Date).Days * 3000;
+                }
+            }
+
+            DataProvider.Ins.DB.SaveChanges();
+        }
+
+        // hàm trả sách
+        private void ReturnListBook()
+        {
+            var BookBorrow = DataProvider.Ins.DB.ListBorrowed.Where(x => x.Id == SelectBookBorrowItem.Id).SingleOrDefault();
+
+            if (BookBorrow == null) return;
+            if (ReaderId > 0)
+            {
+                if(BookBorrow.debtBook > 0)
+                {
+                    MessageBox.Show("Bạn phải trả nợ trước", "Thông báo lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                else
+                {
+                    // Xóa sách khỏi cơ sở dữ liệu
+                    DataProvider.Ins.DB.ListBorrowed.Remove(BookBorrow);
+                    DataProvider.Ins.DB.SaveChanges();
+                    // Xóa sách khỏi danh sách hiện tại
+                    _allListBorrowd.Remove(BookBorrow);
+                    ListBorrowed.Remove(BookBorrow);
+                    MessageBox.Show("Trả sách thành công");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn độc giả trước");
+
+            }
         }
 
         private void AddListBorrow()
@@ -266,7 +345,7 @@ namespace QuanLyThuVien.ViewModels
 
         private void LoadReaderData(int readerId)
         {
-            var listBorrowedReader = ListBorrowed.Where(x => x.IdReader == ReaderId).ToList();
+            var listBorrowedReader = _allListBorrowd.Where(x => x.IdReader == ReaderId).ToList();
             ListBorrowed = new ObservableCollection<ListBorrowed>(listBorrowedReader);
         }
 
@@ -284,7 +363,7 @@ namespace QuanLyThuVien.ViewModels
         }
 
 
-        //cải tiến mỗi khi chạy ứng dụng thì kiểm tra xem ngày trả với ngày hiện tại nếu ngày trả bé hơn ngày hiện tại thì thay đổi status thành cũ
+        //mỗi khi chạy ứng dụng thì kiểm tra xem ngày trả với ngày hiện tại nếu ngày trả bé hơn ngày hiện tại thì thay đổi status thành cũ
         private void UpdateStatus()
         {
             var BookBorrow = DataProvider.Ins.DB.ListBorrowed;
